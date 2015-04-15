@@ -1,7 +1,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>   
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -39,24 +43,30 @@
         </div><!--/.container-fluid -->
       </nav>
 
-      <!-- Main component for a primary marketing message or call to action -->
-      <div class="jumbotron">
-       <form class="form-signup" method="post" th:object="${user}">
-        <h2 class="form-signup-heading">Edit user form</h2>
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" th:field="*{email}" class="form-control" value="${user.getEmail()}">
-
-        <label for="firstname" class="sr-only">First name</label>
-        <input type="text" th:field="*{firstname}" class="form-control" >
-
-        <label for="lastname" class="sr-only">Last name</label>
-        <input type="text" th:field="*{lastname}" class="form-control" value="${user.getLastname()}" >
-
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Edit</button>
-      </form>
+	      <form:form method="post" commandName="user">
+            <table border="0">
+                <tr>
+                    <td colspan="2" align="center"><h2 class="form-signup-heading">Edit user form</h2></td>
+                </tr>
+                <tr>
+                    <td>First name</td>
+                    <td><form:input path="firstname" cssClass="form-control" /></td>
+                </tr>
+                <tr>
+                    <td>Lastname:</td>
+                    <td><form:input path="lastname" cssClass="form-control" /></td>
+                </tr>
+                <tr>
+                    <td>E-mail:</td>
+                    <td><form:input path="email" cssClass="form-control" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><button class="btn btn-lg btn-primary btn-block" type="submit">Edit</button></td>
+                </tr>
+            </table>
+        </form:form>
+        
       
-
-      </div>
 
     </div>
 </body>

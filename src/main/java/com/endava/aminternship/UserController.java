@@ -91,7 +91,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/edit-user/{id}", method = RequestMethod.POST)
-	public String editUserAction(@ModelAttribute User user, BindingResult bindingResult,Model model) {
+	public String editUserAction(@ModelAttribute("user") User user, BindingResult bindingResult,Model model) {
 		System.out.println("yes"+user);
 		model.addAttribute(user);
 		return "/exception";
