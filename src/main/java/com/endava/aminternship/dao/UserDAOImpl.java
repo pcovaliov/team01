@@ -34,6 +34,13 @@ public class UserDAOImpl implements UserDAO {
 
 	}
 
+	@Override
+	public User findUserById(Integer id) {
+		User user = (User) sessionFactory.getCurrentSession().get(
+				User.class, id);
+		return user;
+	}
+
 	
 
 	

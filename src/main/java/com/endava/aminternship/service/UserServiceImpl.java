@@ -11,24 +11,26 @@ import com.endava.aminternship.entity.User;
 import com.endava.aminternship.service.interfaces.UserService;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDAO userDAO;
 
-	@Transactional
 	public void addUser(User user) {
 		userDAO.addUser(user);
 	}
 
-	@Transactional
 	public List<User> listUser() {
 
 		return userDAO.listUser();
 	}
 
-	@Transactional
 	public void removeUser(Integer id) {
 		userDAO.removeUser(id);
+	}
+	
+	public User findUserById(Integer id) {
+		return userDAO.findUserById(id);
 	}
 }
