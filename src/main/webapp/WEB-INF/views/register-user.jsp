@@ -27,8 +27,8 @@
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="/aminternship/">Home</a></li>
-              <li><a href="/aminternship/register-user">Register User</a></li>
+              <li><a href="/aminternship/">Home</a></li>
+              <li class="active"><a href="/aminternship/register-user">Register User</a></li>
               <li><a href="/aminternship/view-users">See all users</a></li>
               <li><a href="user_tweet_page.html">User tweet page</a></li>
             </ul>
@@ -41,11 +41,19 @@
 
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
-        <h1>Twitter Practice</h1>
-        <p>The following project will be a simple "twitter" alike project, to improve our Java/Spring skills while at the internship</p>
-        <p>
-          <a class="btn btn-lg btn-primary" href="#" role="button">Start here</a>
-        </p>
+       <form class="form-signup">
+        <h2 class="form-signup-heading">Sign up form</h2>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+
+        <label for="inputName" class="sr-only">Email address</label>
+        <input type="text" id="inputName" class="form-control" placeholder="First name" required="" autofocus="">
+
+        <label for="inputLastName" class="sr-only">Last name</label>
+        <input type="text" id="inputLastName" class="form-control" placeholder="Last name" required="" autofocus="">
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+      </form>
       </div>
 
     </div>

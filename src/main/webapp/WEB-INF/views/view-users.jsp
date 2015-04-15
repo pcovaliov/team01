@@ -27,9 +27,9 @@
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="/aminternship/">Home</a></li>
+              <li><a href="/aminternship/">Home</a></li>
               <li><a href="/aminternship/register-user">Register User</a></li>
-              <li><a href="/aminternship/view-users">See all users</a></li>
+              <li  class="active"><a href="/aminternship/view-users">See all users</a></li>
               <li><a href="user_tweet_page.html">User tweet page</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -40,12 +40,29 @@
       </nav>
 
       <!-- Main component for a primary marketing message or call to action -->
-      <div class="jumbotron">
-        <h1>Twitter Practice</h1>
-        <p>The following project will be a simple "twitter" alike project, to improve our Java/Spring skills while at the internship</p>
-        <p>
-          <a class="btn btn-lg btn-primary" href="#" role="button">Start here</a>
-        </p>
+     <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Email</th>
+                  <th>Avatar</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Petru</td>
+                  <td>Covaliov</td>
+                  <td>petru@email</td>
+                  <td>picutre here</td>
+                  <td>delete/view</td>
+                </tr>
+              </tbody>
+            </table>
       </div>
 
     </div>
