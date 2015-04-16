@@ -1,5 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>   
 
 <!DOCTYPE html>
 <html lang="en">
@@ -41,19 +44,18 @@
 
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
-       <form class="form-signup">
-        <h2 class="form-signup-heading">Sign up form</h2>
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-
-        <label for="inputName" class="sr-only">Email address</label>
-        <input type="text" id="inputName" class="form-control" placeholder="First name" required="" autofocus="">
-
-        <label for="inputLastName" class="sr-only">Last name</label>
-        <input type="text" id="inputLastName" class="form-control" placeholder="Last name" required="" autofocus="">
-
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
-      </form>
+      <form:form method="post" commandName="user" cssClass="form-signup">
+	      <form:label path="firstname">First Name</form:label>
+	      <form:input path="firstname" cssClass="form-control" />
+	      
+	      <form:label path="lastname">Last name</form:label>
+	      <form:input path="lastname" cssClass="form-control" />
+	      
+	      <form:label path="email">Email</form:label>
+	      <form:input path="email" cssClass="form-control" />
+	      <br>
+	      <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+      </form:form>
       </div>
 
     </div>

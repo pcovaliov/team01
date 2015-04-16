@@ -32,7 +32,7 @@
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
               <li><a href="/aminternship/">Home</a></li>
-              <li class="active"><a href="/aminternship/register-user">Register User</a></li>
+              <li><a href="/aminternship/register-user">Register User</a></li>
               <li><a href="/aminternship/view-users">See all users</a></li>
               <li><a href="user_tweet_page.html">User tweet page</a></li>
             </ul>
@@ -43,27 +43,18 @@
         </div><!--/.container-fluid -->
       </nav>
 
-	      <form:form method="post" commandName="user">
-            <table border="0">
-                <tr>
-                    <td colspan="2" align="center"><h2 class="form-signup-heading">Edit user form</h2></td>
-                </tr>
-                <tr>
-                    <td>First name</td>
-                    <td><form:input path="firstname" cssClass="form-control" /></td>
-                </tr>
-                <tr>
-                    <td>Lastname:</td>
-                    <td><form:input path="lastname" cssClass="form-control" /></td>
-                </tr>
-                <tr>
-                    <td>E-mail:</td>
-                    <td><form:input path="email" cssClass="form-control" /></td>
-                </tr>
-                <tr>
-                    <td colspan="2" align="center"><button class="btn btn-lg btn-primary btn-block" type="submit">Edit</button></td>
-                </tr>
-            </table>
+	      <form:form method="post" commandName="user" cssClass="form-signup">
+		      <form:label path="firstname">First Name</form:label>
+		      <form:input path="firstname" cssClass="form-control" />
+		      
+		      <form:label path="lastname">Last name</form:label>
+		      <form:input path="lastname" cssClass="form-control" />
+		      
+		      <form:label path="email">Email</form:label>
+		      <form:input path="email" cssClass="form-control" />
+		      <br>
+		      <button class="btn btn-lg btn-primary btn-block" type="submit">Edit</button>
+           
         </form:form>
         
       

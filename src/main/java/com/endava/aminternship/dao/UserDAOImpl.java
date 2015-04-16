@@ -41,6 +41,28 @@ public class UserDAOImpl implements UserDAO {
 		return user;
 	}
 
+	@Override
+	public boolean updateUser(User user) {
+		User userFound = findUserByEmail(user.getEmail());
+		if( userFound == null || userFound.getId() == user.getId()){
+			sessionFactory.getCurrentSession().merge(user);
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+
+	@Override
+	public User findUserByEmail(String email) {
+		List result = sessionFactory.getCurrentSession().createQuery("from User as u where u.email=?").setString(0,email).list();
+		if(result.size() != 0){
+			return (User) result.get(0); //returning first element
+		} else {
+			return null;
+		}
+	}
+
 	
 
 	

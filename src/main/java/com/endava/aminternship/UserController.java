@@ -42,21 +42,20 @@ public class UserController {
 //		return "/register-user";
 //	}
 	
-	@RequestMapping("/register-user")
-	public String registerUser(Map<String, Object> map) {
-		System.out.println("------------------ " + logger.getClass() + " ------------------");
-
+	@RequestMapping(value = "/register-user", method = RequestMethod.GET)
+	public String registerUserForm(Map<String, Object> map) {
 		map.put("user", new User());
 		return "/register-user";
 	}
 
-	@RequestMapping(value = "/add-user", method = RequestMethod.POST)
+	@RequestMapping(value = "/register-user", method = RequestMethod.POST)
 	public String addUser(@ModelAttribute("user") User user,
-			BindingResult result) {
-
+			BindingResult result,
+			Map<String, Object> map ) {
+		System.out.println(user);
 		userService.addUser(user);
 
-		return "redirect:/register-user";
+		return "redirect:/view-users";
 
 	}
 	
@@ -91,10 +90,14 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/edit-user/{id}", method = RequestMethod.POST)
-	public String editUserAction(@ModelAttribute("user") User user, BindingResult bindingResult,Model model) {
-		System.out.println("yes"+user);
-		model.addAttribute(user);
-		return "/exception";
+	public String editUserAction(@ModelAttribute("user") User user, BindingResult bindingResult, Map<String, Object> map) {
+		
+		if(userService.updateUser(user) == true){
+			return "redirect:/view-users";
+		} else {
+			map.put("errorMessage", "User not found in the db");
+			return "/exception";
+		}
 	}
 	
 

@@ -27,7 +27,7 @@ public class User {
 	@Column(name = "last_name")
 	private String lastname;
 
-	@Column(name = "email")
+	@Column(name = "email",unique=true)
 	private String email;
 
 	public String getEmail() {
