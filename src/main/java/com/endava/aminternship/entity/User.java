@@ -1,19 +1,22 @@
 package com.endava.aminternship.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 @Entity
 @Table(name = "user_table")
-public class User extends org.springframework.security.core.userdetails.User   {
+public class User extends org.springframework.security.core.userdetails.User  implements Serializable {
 	
 	public User(){
 		
@@ -52,6 +55,17 @@ public class User extends org.springframework.security.core.userdetails.User   {
 	
 	@Column(name = "role" , nullable = false, columnDefinition="varchar(15) default 'ROLE_USER'")
 	private String role = "ROLE_USER";
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	private Collection<Tweet> tweets;
+
+	public Collection<Tweet> getTweets() {
+		return tweets;
+	}
+
+	public void setTweets(Collection<Tweet> tweets) {
+		this.tweets = tweets;
+	}
 
 	public String getEmail() {
 		return email;
