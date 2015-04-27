@@ -1,14 +1,34 @@
 package com.endava.aminternship.entity;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.GrantedAuthorityImpl;
 @Entity
 @Table(name = "user_table")
-public class User {
+public class User extends org.springframework.security.core.userdetails.User   {
+	
+	public User(){
+		
+		super("Anonimous", "", true, true, true, true, new ArrayList<GrantedAuthority>());
+		//new ArrayList<GrantedAuthority>().add(new GrantedAuthorityImpl("ROLE_EMPTY") );
+	};
+		
+	public User(String username, String password, boolean enabled,
+			boolean accountNonExpired, boolean credentialsNonExpired,
+			boolean accountNonLocked,
+			Collection<? extends GrantedAuthority> authorities) {
+		super(username, password, enabled, accountNonExpired, credentialsNonExpired,
+				accountNonLocked, authorities);
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public String toString() {
@@ -29,6 +49,9 @@ public class User {
 
 	@Column(name = "email",unique=true)
 	private String email;
+	
+	@Column(name = "role" , nullable = false, columnDefinition="varchar(15) default 'ROLE_USER'")
+	private String role = "ROLE_USER";
 
 	public String getEmail() {
 		return email;
@@ -46,6 +69,14 @@ public class User {
 		return lastname;
 	}
 
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
 	public void setFirstname(String firstname) {
 		this.firstname = firstname;
 	}
@@ -61,4 +92,15 @@ public class User {
 	public void setId(Integer id) {
 		this.id = id;
 	}
+	//security related
+	public Collection<GrantedAuthority> getAuthorities() {
+		Collection<GrantedAuthority> authorities=new ArrayList<GrantedAuthority>();
+		authorities.add(new GrantedAuthorityImpl(this.role));
+		return authorities;
+	}
+
+    public boolean isAccountNonExpired() { return true;}
+    public boolean isAccountNonLocked() { return true; }
+    public boolean isCredentialsNonExpired() {return true; }
+    public boolean isEnabled() { return true;}
 }

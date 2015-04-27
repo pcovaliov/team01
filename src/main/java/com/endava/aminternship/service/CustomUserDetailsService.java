@@ -19,8 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.endava.aminternship.dao.interfaces.UserDAO;
 
-
- 
 @Service("userDetailsService")
 public class CustomUserDetailsService implements UserDetailsService {
  
@@ -32,43 +30,16 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(final String username) 
 		throws UsernameNotFoundException {
- 
 		com.endava.aminternship.entity.User user = userDao.findUserByEmail(username);
-
-		System.out.println(user);
-		return buildUserForAuthentication(user);
-
+		System.out.println(user.getRole());
+		return user;//buildUserForAuthentication(user);
 	}
  
-	// Converts com.mkyong.users.model.User user to
+	// Converts our "User" to
 	// org.springframework.security.core.userdetails.User
 	private User buildUserForAuthentication(com.endava.aminternship.entity.User user) {
 		Collection<GrantedAuthority> authorities=new ArrayList<GrantedAuthority>();
-		authorities.add(new GrantedAuthorityImpl("ROLE_USER"));
+		authorities.add(new GrantedAuthorityImpl(user.getRole()));
 		return new User(user.getEmail(), "", true, true, true, true, authorities);
 	}
 }
-
-
-
-//	if(user!=null)
-//	{
-//		String password=user.getPassword();
-//		boolean enabled=user.isEnabled();
-//		boolean accountNonExpired=user.isEnabled();
-//		boolean credentialsNonExpired=user.isEnabled();
-//		boolean accountNonLocker=user.isEnabled();
-//		//Populate the user role
-//		Collection<GrantedAuthority> authorities=new ArrayList<GrantedAuthority>();
-//		authorities.add(new GrantedAuthorityImpl(user.getRole()));
-//		//Creation of Spring security user object
-//		org.springframework.security.core.userdetails.User securityUser=new 
-//		org.springframework.security.core.userdetails.User(username,password,enabled,accountNonExpired,credentialsNonExpired,accountNonLocker,authorities);
-//	
-//	return securityUser;
-//	}
-//	else
-//	{
-//		throw new UsernameNotFoundException("User Not found!!!");
-//	}
-			

@@ -1,5 +1,6 @@
 package com.endava.aminternship;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,4 +27,14 @@ public class SecurityController {
 		return model;
  
 	}
+	
+	// for 403 access denied page
+	@RequestMapping(value = "/403", method = RequestMethod.GET)
+	public ModelAndView accessDenied() {
+		ModelAndView model = new ModelAndView();
+		
+		model.setViewName("accessDenied");
+		return model;
+	}
+
 }
