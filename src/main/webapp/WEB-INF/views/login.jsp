@@ -7,11 +7,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<title>Index</title>
-	<!-- ================================== CSS ================================== -->
-	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css">
-	
+	<%@ include file="styles/head.jsp" %>
 	<style>
 .error {
 	padding: 15px;
@@ -38,7 +34,7 @@
 <body>
 	<div class="container">
 
-      <!-- Static navbar -->
+    <!-- Static navbar -->
      	<c:choose>
 		  <c:when test="${pageContext.request.userPrincipal.authenticated}">
 		  	<%@ include file="header/connected.jsp" %>
@@ -47,6 +43,11 @@
 		  	<%@ include file="header/disconnected.jsp" %>
 		  </c:otherwise>
 		</c:choose>
+
+		<script type="text/javascript">
+			window.onload = activateHeaderLink('login-link');
+		</script>
+       <!--Until here header stuff -->
 
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
@@ -60,13 +61,9 @@
       </form>
  
 		<c:if test="${not empty error}">
+			<br>
 			<div class="error">${error}</div>
-	
-        <div style="color:red">
-                Login Failed!!!<br />
-                Reason : ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
-         </div>
-    
+	   
 		</c:if>
 		<c:if test="${not empty msg}">
 			<div class="msg">${msg}</div>

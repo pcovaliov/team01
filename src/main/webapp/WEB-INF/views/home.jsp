@@ -4,11 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<title>Index</title>
-	<!-- ================================== CSS ================================== -->
-	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css">
-	
+	<%@ include file="styles/head.jsp" %>
 </head>
 <body>
 	<div class="container">
@@ -22,7 +18,11 @@
 		  	<%@ include file="header/disconnected.jsp" %>
 		  </c:otherwise>
 		</c:choose>
-      
+
+		<script type="text/javascript">
+			window.onload = activateHeaderLink('home-link');
+		</script>
+       <!--Until here header stuff -->
 
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
