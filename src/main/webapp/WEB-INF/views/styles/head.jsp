@@ -2,5 +2,5 @@
 	<title>Index</title>
 	<!-- ================================== CSS ================================== -->
 	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css">
-	<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-	<script type="text/javascript" src="resources/js/main.js"></script>
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="/aminternship/resources/js/main.js"></script>

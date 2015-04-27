@@ -6,6 +6,9 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,21 +30,6 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-//	@RequestMapping(value="/getUsers", method = RequestMethod.POST ,headers="")
-//	public @ResponseBody List<?> getUsers() {
-//		System.out.println("------------------ " + logger.getClass() + " ------------------");
-//
-//		return userService.getUsersList();[{"name":"sfsdfs","email":"dfsdfsd2sasd"},{"name":"sfsdfs","email":"dfsdfsd2sasd"},{"name":"sfsdfs","email":"dfsdfsd2sasd"}];
-//		
-//	}
-//	@RequestMapping("/getUsersbyName")
-//	public @ResponseBody User getUsers(Map<String, Object> map) {
-//		System.out.println("------------------ " + logger.getClass() + " ------------------");
-//
-//		map.put("user", new User());
-//		return "/register-user";
-//	}
-	
 	@RequestMapping(value = "/register-user", method = RequestMethod.GET)
 	public String registerUserForm(Map<String, Object> map) {
 		map.put("user", new User());
@@ -54,8 +42,11 @@ public class UserController {
 			Map<String, Object> map ) {
 		System.out.println(user);
 		userService.addUser(user);
+		
+		Authentication auth = new UsernamePasswordAuthenticationToken(user,null, user.getAuthorities());
+		SecurityContextHolder.getContext().setAuthentication(auth);
 
-		return "redirect:/view-users";
+		return "redirect:/tweet-page";
 
 	}
 	
