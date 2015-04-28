@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,17 +38,17 @@ public class TweetController {
 	public String registerUserForm(Map<String, Object> map) {
 		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Collection tweetList = tweeterService.getTweetsForUser(user);
-		
-		map.put("tweetList", tweetList);
+		map.put("tweetObject",new Tweet());            
+		map.put("tweetList", tweetList);     
 		return "/tweet-page";
 	}
-
-	@RequestMapping(value = "/tweet-page", consumes="application/json", method = RequestMethod.POST)
-	public @ResponseBody Tweet addTweet(@RequestBody Tweet tweet) {
+	
+	@RequestMapping(value = "/tweet-page", headers = "Accept=application/json; charset=UTF-8" , method = RequestMethod.POST)
+	public @ResponseBody Tweet addTweet(@RequestBody Tweet insertedTweet) {
 		System.out.println("Tweet POST");
 		
 		//Tweet insertedTweet = new Tweet();  
-		System.out.println(tweet);
-		return tweet;
+		System.out.println(insertedTweet);
+		return insertedTweet;
 	}
 }

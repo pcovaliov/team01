@@ -33,18 +33,21 @@
       <!-- Main component for a primary marketing message or call to action -->
       <div class="row">
         <div class="col-lg-4">
-          <form role="form">
+          
             <div class="form-group">
-              <label for="comment">Tweet:</label>
-              <textarea class="form-control" rows="5" id="comment"></textarea>
-            </div>
-            <button type="button" class="btn btn-primary">Tweet</button>
-          </form>
+              <label for="tweet">Tweet:</label>
+                <form:form method="post" commandName="tweetObject" onsubmit="event.preventDefault(); return publishTweet(this);">
+                  <form:input type="textarea" path="tweet" cssClass="form-control" />
+                  <br>
+                  <button class="btn btn-primary" type="submit">Tweet</button>
+                </form:form>
+            </div> 
+            
         </div>
         <div class="col-lg-8">
           <h2>User Tweets</h2>
           <div class="table-responsive">
-            <table class="table table-striped">
+            <table  id="tweet-table" class="table table-striped">
               <thead>
                 <tr>
                   <th>#</th>
