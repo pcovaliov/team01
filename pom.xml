@@ -195,9 +195,13 @@
 			<artifactId>commons-digester</artifactId>
 			<version>2.0</version>
 		</dependency>		
-      
-		</dependency>	
-		
+      	<!-- hibernate validation -->
+	  	<dependency>
+		   	<groupId>org.hibernate</groupId>
+		   	<artifactId>hibernate-validator</artifactId>
+		   	<version>4.2.0.Final</version>
+		</dependency>
+  
 		<!-- Jackson JSON Mapper -->
 		
 		<dependency>

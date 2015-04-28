@@ -29,21 +29,6 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-//	@RequestMapping(value="/getUsers", method = RequestMethod.POST ,headers="")
-//	public @ResponseBody List<?> getUsers() {
-//		System.out.println("------------------ " + logger.getClass() + " ------------------");
-//
-//		return userService.getUsersList();[{"name":"sfsdfs","email":"dfsdfsd2sasd"},{"name":"sfsdfs","email":"dfsdfsd2sasd"},{"name":"sfsdfs","email":"dfsdfsd2sasd"}];
-//		
-//	}
-//	@RequestMapping("/getUsersbyName")
-//	public @ResponseBody User getUsers(Map<String, Object> map) {
-//		System.out.println("------------------ " + logger.getClass() + " ------------------");
-//
-//		map.put("user", new User());
-//		return "/register-user";
-//	}
-	
 	@RequestMapping(value = "/register-user", method = RequestMethod.GET)
 	public String registerUserForm(Map<String, Object> map) {
 		map.put("user", new User());
@@ -61,7 +46,7 @@ public class UserController {
 		System.out.println(user);
 		userService.addUser(user);
 
-		return "redirect:/view-users";
+		return "redirect:/tweet-page";
 
 	}
 	

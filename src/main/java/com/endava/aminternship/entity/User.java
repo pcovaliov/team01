@@ -21,9 +21,7 @@ import org.springframework.security.core.authority.GrantedAuthorityImpl;
 public class User extends org.springframework.security.core.userdetails.User  implements Serializable {
 	
 	public User(){
-		
 		super("Anonimous", "", true, true, true, true, new ArrayList<GrantedAuthority>());
-		//new ArrayList<GrantedAuthority>().add(new GrantedAuthorityImpl("ROLE_EMPTY") );
 	};
 		
 	public User(String username, String password, boolean enabled,
@@ -32,7 +30,6 @@ public class User extends org.springframework.security.core.userdetails.User  im
 			Collection<? extends GrantedAuthority> authorities) {
 		super(username, password, enabled, accountNonExpired, credentialsNonExpired,
 				accountNonLocked, authorities);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
