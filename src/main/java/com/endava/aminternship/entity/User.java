@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "user_table")
@@ -27,7 +29,8 @@ public class User {
 	@Column(name = "last_name")
 	private String lastname;
 
-	@Column(name = "email",unique=true)
+	@Column(name = "email", unique = true)
+	@Pattern(regexp = "[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})")
 	private String email;
 
 	public String getEmail() {
