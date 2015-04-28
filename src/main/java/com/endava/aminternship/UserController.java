@@ -3,6 +3,8 @@ package com.endava.aminternship;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,9 +51,13 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/register-user", method = RequestMethod.POST)
-	public String addUser(@ModelAttribute("user") User user,
+	public String addUser(@Valid @ModelAttribute("user") User user,
 			BindingResult result,
 			Map<String, Object> map ) {
+		if(result.hasErrors()){
+			System.out.println(user);
+			
+		}
 		System.out.println(user);
 		userService.addUser(user);
 

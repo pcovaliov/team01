@@ -11,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
@@ -50,7 +52,8 @@ public class User extends org.springframework.security.core.userdetails.User  im
 	@Column(name = "last_name")
 	private String lastname;
 
-	@Column(name = "email",unique=true)
+	@Column(name = "email", unique = true)
+	@Pattern(regexp = "[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})")
 	private String email;
 	
 	@Column(name = "role" , nullable = false, columnDefinition="varchar(15) default 'ROLE_USER'")
