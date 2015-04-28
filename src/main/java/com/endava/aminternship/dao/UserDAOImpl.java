@@ -6,6 +6,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.endava.aminternship.dao.interfaces.TwitterDAO;
 import com.endava.aminternship.dao.interfaces.UserDAO;
 import com.endava.aminternship.entity.User;
 
@@ -62,8 +63,4 @@ public class UserDAOImpl implements UserDAO {
 			return null;
 		}
 	}
-
-	
-
-	
 }

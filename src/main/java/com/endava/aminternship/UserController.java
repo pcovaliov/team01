@@ -65,7 +65,7 @@ public class UserController {
 
 	}
 	
-	@RequestMapping("/view-users")
+	@RequestMapping("/admin/view-users")
 	public String viewUsers(Map<String, Object> map) {
 		System.out.println("------------------ " + logger.getClass() + " ------------------");
 		map.put("usersList", userService.listUser());
@@ -74,15 +74,15 @@ public class UserController {
 	
 	
 	
-	@RequestMapping(value="/delete-user/{id}", method = RequestMethod.GET)
+	@RequestMapping(value="/admin/delete-user/{id}", method = RequestMethod.GET)
 	public String deleteUser(@PathVariable("id") int id) {
 		userService.removeUser(id);
 		
-		return "redirect:/view-users";
+		return "redirect:/admin/view-users";
 	}
 	
 	
-	@RequestMapping(value="/edit-user/{id}", method = RequestMethod.GET)
+	@RequestMapping(value="/admin/edit-user/{id}", method = RequestMethod.GET)
 	public String editUser(Map<String, Object> map ,@PathVariable("id") int id) {
 		User u = userService.findUserById(id);
 		if(u != null){
@@ -95,11 +95,11 @@ public class UserController {
 		}
 	}
 	
-	@RequestMapping(value="/edit-user/{id}", method = RequestMethod.POST)
+	@RequestMapping(value="/admin/edit-user/{id}", method = RequestMethod.POST)
 	public String editUserAction(@ModelAttribute("user") User user, BindingResult bindingResult, Map<String, Object> map) {
 		
 		if(userService.updateUser(user) == true){
-			return "redirect:/view-users";
+			return "redirect:/admin/view-users";
 		} else {
 			map.put("errorMessage", "User not found in the db");
 			return "/exception";
