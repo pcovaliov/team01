@@ -14,6 +14,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.codehaus.jackson.annotate.JsonAutoDetect;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import com.endava.aminternship.util.JsonDateSerializer;
+
+@JsonAutoDetect
 @Entity
 @Table(name = "tweet_table")
 public class Tweet implements Serializable{
@@ -46,7 +52,7 @@ public class Tweet implements Serializable{
 	public void setTweet(String tweet) {
 		this.tweet = tweet;
 	}
-
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDate() {
 		return date;
 	}

@@ -57,7 +57,7 @@ public class User extends org.springframework.security.core.userdetails.User  im
 	private String role = "ROLE_USER";
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-	private Collection<Tweet> tweets;
+	private Collection<Tweet> tweets = new ArrayList<Tweet>();
 
 	public Collection<Tweet> getTweets() {
 		return tweets;
