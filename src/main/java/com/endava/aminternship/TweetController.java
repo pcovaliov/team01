@@ -32,12 +32,12 @@ public class TweetController {
 			.getLogger(TweetController.class);
 	
 	@Autowired
-	private TwitterService tweeterService;
+	private TwitterService twiterService;
 
 	@RequestMapping(value = "/tweet-page", method = RequestMethod.GET)
 	public String registerUserForm(Map<String, Object> map) {
 		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Collection tweetList = tweeterService.getTweetsForUser(user);
+		Collection tweetList = twiterService.getTweetsForUser(user);
 		map.put("tweetObject",new Tweet());            
 		map.put("tweetList", tweetList);     
 		return "/tweet-page";
@@ -45,10 +45,10 @@ public class TweetController {
 	
 	@RequestMapping(value = "/tweet-page", headers = "Accept=application/json; charset=UTF-8" , method = RequestMethod.POST)
 	public @ResponseBody Tweet addTweet(@RequestBody Tweet insertedTweet) {
-		System.out.println("Tweet POST");
-		
-		//Tweet insertedTweet = new Tweet();  
-		System.out.println(insertedTweet);
+		User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		System.out.println(currentUser);
+		//insertedTweet.setUser(currentUser);
+		//twiterService.addTweet(insertedTweet);
 		return insertedTweet;
 	}
 }

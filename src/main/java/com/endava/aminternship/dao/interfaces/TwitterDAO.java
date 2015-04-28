@@ -8,4 +8,5 @@ import com.endava.aminternship.entity.User;
 public interface TwitterDAO {
 
 	public Collection<Tweet> getTweetsForUser(User user);
+	public Tweet insertTweet(Tweet tweet);
 }

@@ -28,5 +28,10 @@ public class TwitterServiceImpl implements TwitterService {
 		return twitterDAO.getTweetsForUser(user);
 	}
 
+	@Override
+	public Tweet addTweet(Tweet tweet) {
+		return twitterDAO.insertTweet(tweet);
+	}
+
 
 }

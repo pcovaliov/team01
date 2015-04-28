@@ -50,7 +50,7 @@ public class User extends org.springframework.security.core.userdetails.User  im
 	private String lastname;
 
 	@Column(name = "email", unique = true)
-	@Pattern(regexp = "[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})")
+	//@Pattern(regexp = "[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})")
 	private String email;
 	
 	@Column(name = "role" , nullable = false, columnDefinition="varchar(15) default 'ROLE_USER'")

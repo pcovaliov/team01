@@ -36,10 +36,10 @@
           
             <div class="form-group">
               <label for="tweet">Tweet:</label>
-                <form:form method="post" commandName="tweetObject" onsubmit="event.preventDefault(); return publishTweet(this);">
+                <form:form method="post" id="testForm" commandName="tweetObject" >
                   <form:input type="textarea" path="tweet" cssClass="form-control" />
                   <br>
-                  <button class="btn btn-primary" type="submit">Tweet</button>
+                  <input type="submit" class="btn btn-primary" value="Tweet" />
                 </form:form>
             </div> 
             
@@ -69,5 +69,6 @@
        </div>
 
     </div>
+    <script type="text/javascript" src="/aminternship/resources/js/tweetSubmitFormHandle.js"></script>
 </body>
 </html>
