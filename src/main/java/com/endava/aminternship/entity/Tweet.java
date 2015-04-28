@@ -17,6 +17,15 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "tweet_table")
 public class Tweet implements Serializable{
+	public Tweet(){
+		
+	};
+	@Override
+	public String toString() {
+		return "Tweet [id=" + id + ", tweet=" + tweet + ", date=" + date
+				+ ", user=" + user + "]";
+	}
+	
 	@Id
 	@Column(name = "ID")
 	@GeneratedValue

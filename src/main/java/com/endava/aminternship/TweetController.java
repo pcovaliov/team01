@@ -38,7 +38,12 @@ public class TweetController {
 		return "/tweet-page";
 	}
 
-	
-	
-
+	@RequestMapping(value = "/tweet-page", consumes="application/json", method = RequestMethod.POST)
+	public @ResponseBody Tweet addTweet(@RequestBody Tweet tweet) {
+		System.out.println("Tweet POST");
+		
+		//Tweet insertedTweet = new Tweet();  
+		System.out.println(tweet);
+		return tweet;
+	}
 }
