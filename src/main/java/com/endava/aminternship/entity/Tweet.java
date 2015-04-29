@@ -3,6 +3,7 @@ package com.endava.aminternship.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,10 +20,10 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import com.endava.aminternship.util.JsonDateSerializer;
 
-@JsonAutoDetect
+
 @Entity
 @Table(name = "tweet_table")
-public class Tweet implements Serializable{
+public class Tweet {
 	public Tweet(){
 		
 	};
@@ -52,7 +53,7 @@ public class Tweet implements Serializable{
 	public void setTweet(String tweet) {
 		this.tweet = tweet;
 	}
-	@JsonSerialize(using=JsonDateSerializer.class)
+
 	public Date getDate() {
 		return date;
 	}

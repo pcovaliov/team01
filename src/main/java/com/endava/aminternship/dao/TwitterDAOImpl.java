@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.endava.aminternship.dao.interfaces.TwitterDAO;
-import com.endava.aminternship.dao.interfaces.UserDAO;
 import com.endava.aminternship.entity.Tweet;
 import com.endava.aminternship.entity.User;
 
@@ -22,7 +21,7 @@ public class TwitterDAOImpl implements TwitterDAO {
 
 	@Override
 	public Collection<Tweet> getTweetsForUser(User user) {
-		List result = sessionFactory.getCurrentSession().createQuery("from Tweet as t where t.user=?").setLong(0,user.getId()).list();
+		List result = sessionFactory.getCurrentSession().createQuery("from Tweet as t where t.user=? order by t.date DESC").setLong(0,user.getId()).list();
 		return result;
 	}
 

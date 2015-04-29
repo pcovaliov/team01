@@ -4,7 +4,9 @@
     "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 
 <hibernate-configuration>
+	
 	<session-factory>
+		<property name="hibernate.enable_lazy_load_no_trans">true</property>
 		<mapping class="com.endava.aminternship.entity.User" />
 		<mapping class="com.endava.aminternship.entity.Tweet" />
 	</session-factory>

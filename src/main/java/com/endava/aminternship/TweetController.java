@@ -51,8 +51,8 @@ public class TweetController {
 		User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //		currentUser = userService.findUserById(currentUser.getId());
 		System.out.println(currentUser);
-//		insertedTweet.setUser(currentUser);
-//		twiterService.addTweet(insertedTweet);
+		insertedTweet.setUser(currentUser);
+		twiterService.addTweet(insertedTweet);
 		return insertedTweet;
 	}
 }

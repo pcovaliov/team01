@@ -18,7 +18,9 @@ $("#add-tweet-form input[type='submit']").click(function(e){
 		tr += data['tweet'];
 		tr += '</td>';
 		tr += '<td>';
-		tr += data['date'];
+			var date = new Date(data['date']);
+			var dateString = ''+date.getFullYear() + '-'+ date.getMonth() + '-' + date.getDate() + ' ' +date.getHours() + ':' +date.getMinutes() + ':' + date.getSeconds() ;
+		tr += dateString;
 		tr += '</td>';
 		tr += '</tr>';
 		

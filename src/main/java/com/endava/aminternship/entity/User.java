@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 
+import org.codehaus.jackson.annotate.JsonBackReference;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 @Entity
@@ -56,7 +57,8 @@ public class User extends org.springframework.security.core.userdetails.User  im
 	@Column(name = "role" , nullable = false, columnDefinition="varchar(15) default 'ROLE_USER'")
 	private String role = "ROLE_USER";
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+	@JsonBackReference
 	private Collection<Tweet> tweets = new ArrayList<Tweet>();
 
 	public Collection<Tweet> getTweets() {
