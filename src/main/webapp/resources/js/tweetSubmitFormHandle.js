@@ -1,4 +1,6 @@
-$("#add-tweet-form input[type='submit']").click(function(e){
+/* not needed for the momment
+ * 
+ $("#add-tweet-form input[type='submit']").click(function(e){
   e.preventDefault();
   var serializedData =$("#add-tweet-form").serializeObject();
   $.ajax({
@@ -39,3 +41,4 @@ $("#add-tweet-form input[type='submit']").click(function(e){
  });
 
 
+*/

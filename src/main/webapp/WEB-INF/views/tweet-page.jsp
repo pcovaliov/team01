@@ -39,6 +39,7 @@
               <label for="tweet">Tweet:</label>
                 <form:form method="post" id="add-tweet-form" commandName="tweetObject">
                   <form:input type="textarea" path="tweet" cssClass="form-control" />
+                  <form:errors path="tweet" cssClass="error" />
                   <br>
                   <input type="submit" class="btn btn-primary" value="Tweet" />
                 </form:form>

@@ -43,8 +43,7 @@ public class UserController {
 			BindingResult result,
 			Map<String, Object> map ) {
 		if(result.hasErrors()){
-			System.out.println(user);
-			
+			return "/register-user";			
 		}
 		System.out.println(user);
 		userService.addUser(user);
@@ -87,8 +86,10 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/admin/edit-user/{id}", method = RequestMethod.POST)
-	public String editUserAction(@ModelAttribute("user") User user, BindingResult bindingResult, Map<String, Object> map) {
-		
+	public String editUserAction(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Map<String, Object> map) {
+		if(bindingResult.hasErrors()){
+			return "/edit-user";			
+		}
 		if(userService.updateUser(user) == true){
 			return "redirect:/admin/view-users";
 		} else {

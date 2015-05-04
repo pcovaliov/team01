@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
 
 import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
@@ -71,6 +72,7 @@ public class Tweet {
 	}
 
 	@Column(name = "tweet")
+	@Size(min = 1, max = 140, message = "Invalid number of characters")
 	private String tweet;
 	
 	@Temporal(TemporalType.DATE)

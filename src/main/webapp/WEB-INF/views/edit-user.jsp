@@ -33,6 +33,7 @@
 		      
 		      <form:label path="email">Email</form:label>
 		      <form:input path="email" cssClass="form-control" />
+		      <form:errors path="email" cssClass="error" />
 		      <br>
 		      <button class="btn btn-lg btn-primary btn-block" type="submit">Edit</button>
            

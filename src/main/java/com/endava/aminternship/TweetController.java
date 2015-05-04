@@ -4,11 +4,14 @@ package com.endava.aminternship;
 import java.util.Collection;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,12 +50,19 @@ public class TweetController {
 	}
 	
 	@RequestMapping(value = "/tweet-page", headers = "Accept=application/json; charset=UTF-8" , method = RequestMethod.POST)
-	public @ResponseBody Tweet addTweet(@RequestBody Tweet insertedTweet) {
+	public String addTweet(@Valid @ModelAttribute("tweetObject") Tweet insertedTweet, BindingResult bindingResult,Map<String, Object> map) {
+		if(bindingResult.hasErrors()){
+			return "/tweet-page";	
+		}
 		User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//		currentUser = userService.findUserById(currentUser.getId());
-		System.out.println(currentUser);
+		
 		insertedTweet.setUser(currentUser);
 		twiterService.addTweet(insertedTweet);
-		return insertedTweet;
+		
+		Collection tweetList = twiterService.getTweetsForUser(currentUser);
+		map.put("tweetObject",new Tweet());            
+		map.put("tweetList", tweetList);
+		
+		return "/tweet-page";
 	}
 }
