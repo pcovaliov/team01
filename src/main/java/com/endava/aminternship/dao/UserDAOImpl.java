@@ -1,13 +1,17 @@
 package com.endava.aminternship.dao;
 
+import java.util.Collection;
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
 import com.endava.aminternship.dao.interfaces.TwitterDAO;
 import com.endava.aminternship.dao.interfaces.UserDAO;
+import com.endava.aminternship.entity.Tweet;
 import com.endava.aminternship.entity.User;
 
 @Repository
@@ -21,9 +25,13 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<User> listUser() {
-		return sessionFactory.getCurrentSession().createQuery("from User")
-				.list();
+	public List<User> listUser(int limit, int offset) {
+		
+		Query q = sessionFactory.getCurrentSession().createQuery("from User");
+		q.setFirstResult(offset);
+		q.setMaxResults(limit);
+		return q.list();
+		
 	}
 
 	public void removeUser(Integer id) {

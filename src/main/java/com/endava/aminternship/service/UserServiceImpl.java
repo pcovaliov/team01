@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
 
 	public List<User> listUser() {
 
-		return userDAO.listUser();
+		return userDAO.listUser(10,0);
 	}
 
 	public void removeUser(Integer id) {

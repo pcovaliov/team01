@@ -75,7 +75,7 @@ public class Tweet {
 	@Size(min = 1, max = 140, message = "Invalid number of characters")
 	private String tweet;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="post_date")
 	private Date date = new Date();
 	

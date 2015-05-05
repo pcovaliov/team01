@@ -25,7 +25,7 @@ public class TwitterServiceImpl implements TwitterService {
 	public Collection<Tweet> getTweetsForUser(User user) {
 		if(user == null)
 			return null;
-		return twitterDAO.getTweetsForUser(user);
+		return twitterDAO.getTweetsForUser(user,10,0);
 	}
 
 	@Override
