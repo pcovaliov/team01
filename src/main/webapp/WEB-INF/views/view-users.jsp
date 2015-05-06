@@ -54,6 +54,10 @@
 							</td>
 						</tr>
 			  </c:forEach>
+			  <tr>
+				    	<td><a href="${prevUserLink}">Prev</a></td>
+					    <td><a href="${nextUserLink}">Next</a></td>
+					</tr>
               </tbody>
             </table>
       </div>

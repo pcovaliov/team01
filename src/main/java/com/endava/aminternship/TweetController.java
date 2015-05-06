@@ -22,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.endava.aminternship.entity.Tweet;
 import com.endava.aminternship.entity.User;
@@ -41,11 +43,27 @@ public class TweetController {
 	private UserService userService;
 
 	@RequestMapping(value = "/tweet-page", method = RequestMethod.GET)
-	public String registerUserForm(Map<String, Object> map) {
+	public String registerUserForm(
+			Map<String, Object> map, 
+			@RequestParam(value = "offset", required = false, defaultValue = "0") int offset,
+			@RequestParam(value = "limit", required = false, defaultValue = "10") int limit
+		) {
 		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Collection tweetList = twiterService.getTweetsForUser(user);
+		Collection tweetList = twiterService.getTweetsForUser(user,limit,offset);
 		map.put("tweetObject",new Tweet());            
-		map.put("tweetList", tweetList);     
+		map.put("tweetList", tweetList);
+		
+		if(offset < tweetList.size()){
+		String nextTweetsLink = ServletUriComponentsBuilder.fromCurrentContextPath().path("/tweet-page?offset="+(offset+limit)).build().toUriString();
+		map.put("nextTweetsLink", nextTweetsLink);
+		}
+		
+		if(offset >= 10){
+			String prevTweetsLink = ServletUriComponentsBuilder.fromCurrentContextPath().path("/tweet-page?offset="+(offset-limit)).build().toUriString();
+			map.put("prevTweetsLink", prevTweetsLink);
+		}
+			   
+		    
 		return "/tweet-page";
 	}
 	
@@ -59,10 +77,6 @@ public class TweetController {
 		insertedTweet.setUser(currentUser);
 		twiterService.addTweet(insertedTweet);
 		
-		Collection tweetList = twiterService.getTweetsForUser(currentUser);
-		map.put("tweetObject",new Tweet());            
-		map.put("tweetList", tweetList);
-		
-		return "/tweet-page";
+		return "redirect:/tweet-page";
 	}
 }

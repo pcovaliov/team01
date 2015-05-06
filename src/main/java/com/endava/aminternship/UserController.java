@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.endava.aminternship.entity.User;
 import com.endava.aminternship.service.interfaces.UserService;
@@ -34,7 +36,11 @@ public class UserController {
 
 	@RequestMapping(value = "/register-user", method = RequestMethod.GET)
 	public String registerUserForm(Map<String, Object> map) {
+		
 		map.put("user", new User());
+		
+		
+		
 		return "/register-user";
 	}
 
@@ -56,9 +62,24 @@ public class UserController {
 	}
 	
 	@RequestMapping("/admin/view-users")
-	public String viewUsers(Map<String, Object> map) {
-		System.out.println("------------------ " + logger.getClass() + " ------------------");
-		map.put("usersList", userService.listUser());
+	public String viewUsers(Map<String, Object> map,
+			@RequestParam(value = "offset", required = false, defaultValue = "0") int offset,
+			@RequestParam(value = "limit", required = false, defaultValue = "10") int limit	) {
+		
+		map.put("usersList", userService.listUser(limit, offset));
+		
+		if(offset < map.size()){
+			String nextUserLink = ServletUriComponentsBuilder.fromCurrentContextPath().path("/admin/view-users?offset="+(offset+limit)).build().toUriString();
+			map.put("nextUserLink", nextUserLink);
+		}
+			
+		if(offset >= 10){
+			String prevUserLink = ServletUriComponentsBuilder.fromCurrentContextPath().path("/admin/view-users?offset="+(offset-limit)).build().toUriString();
+			map.put("prevUserLink", prevUserLink);
+		}
+		
+				
+	
 		return "/view-users";
 	}
 	

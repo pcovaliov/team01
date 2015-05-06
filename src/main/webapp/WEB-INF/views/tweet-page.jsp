@@ -65,6 +65,11 @@
 								<td><fmt:formatDate value="${tweet.getDate()}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 							</tr>
 				  </c:forEach>
+				  
+				    <tr>
+				    	<td><a href="${prevTweetsLink}">Prev</a></td>
+					    <td><a href="${nextTweetsLink}">Next</a></td>
+					</tr>
               </tbody>
             </table>
         </div>

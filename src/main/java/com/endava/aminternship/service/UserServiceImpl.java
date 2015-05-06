@@ -21,9 +21,9 @@ public class UserServiceImpl implements UserService {
 		userDAO.addUser(user);
 	}
 
-	public List<User> listUser() {
+	public List<User> listUser(int limit, int offset) {
 
-		return userDAO.listUser(10,0);
+		return userDAO.listUser(limit, offset);
 	}
 
 	public void removeUser(Integer id) {
