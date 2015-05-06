@@ -24,7 +24,7 @@ import com.endava.aminternship.util.JsonDateSerializer;
 
 @Entity
 @Table(name = "tweet_table")
-public class Tweet {
+public class Tweet implements Serializable{
 	public Tweet(){
 		
 	};

@@ -67,13 +67,14 @@ public class TweetController {
 		return "/tweet-page";
 	}
 	
-	@RequestMapping(value = "/tweet-page", headers = "Accept=application/json; charset=UTF-8" , method = RequestMethod.POST)
+	@RequestMapping(value = "/tweet-page" , method = RequestMethod.POST)
 	public String addTweet(@Valid @ModelAttribute("tweetObject") Tweet insertedTweet, BindingResult bindingResult,Map<String, Object> map) {
 		if(bindingResult.hasErrors()){
+			System.out.println("error found");
 			return "/tweet-page";	
 		}
 		User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		
+		System.out.println(insertedTweet);
 		insertedTweet.setUser(currentUser);
 		twiterService.addTweet(insertedTweet);
 		
