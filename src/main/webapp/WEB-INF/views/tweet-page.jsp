@@ -10,13 +10,11 @@
 <html lang="en">
 <head>
 	<%@ include file="styles/head.jsp" %>
-	
 </head>
 <body>
 	<div class="container">
-
-    <!-- Static navbar -->
-      <c:choose>
+    
+    <c:choose>
       <c:when test="${pageContext.request.userPrincipal.authenticated}">
         <%@ include file="header/connected.jsp" %>
       </c:when>
@@ -28,13 +26,9 @@
     <script type="text/javascript">
       window.onload = activateHeaderLink('user-tweet-link');
     </script>
-       <!--Until here header stuff -->
-      
 
-      <!-- Main component for a primary marketing message or call to action -->
       <div class="row">
         <div class="col-lg-4">
-          
             <div class="form-group">
               <label for="tweet">Tweet:</label>
                 <form:form method="post" id="add-tweet-form" commandName="tweetObject">
@@ -44,8 +38,8 @@
                   <input type="submit" class="btn btn-primary" value="Tweet" />
                 </form:form>
             </div> 
-            
         </div>
+        
         <div class="col-lg-8">
           <h2>User Tweets</h2>
           <div class="table-responsive">
@@ -65,7 +59,6 @@
 								<td><fmt:formatDate value="${tweet.getDate()}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 							</tr>
 				  </c:forEach>
-				  
 				    <tr>
 				    	<td><a href="${prevTweetsLink}">Prev</a></td>
 					    <td><a href="${nextTweetsLink}">Next</a></td>

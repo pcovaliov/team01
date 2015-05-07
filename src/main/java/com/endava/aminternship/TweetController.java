@@ -5,25 +5,14 @@ import java.util.Collection;
 import java.util.Map;
 
 import javax.validation.Valid;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-
-
-
-
-
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.endava.aminternship.entity.Tweet;
@@ -34,9 +23,6 @@ import com.endava.aminternship.service.interfaces.UserService;
 
 @Controller
 public class TweetController {
-	private static final Logger logger = LoggerFactory
-			.getLogger(TweetController.class);
-	
 	@Autowired
 	private TwitterService twiterService;
 	@Autowired
@@ -49,7 +35,7 @@ public class TweetController {
 			@RequestParam(value = "limit", required = false, defaultValue = "10") int limit
 		) {
 		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Collection tweetList = twiterService.getTweetsForUser(user,limit,offset);
+		Collection<Tweet> tweetList = twiterService.getTweetsForUser(user,limit,offset);
 		map.put("tweetObject",new Tweet());            
 		map.put("tweetList", tweetList);
 		

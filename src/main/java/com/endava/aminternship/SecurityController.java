@@ -1,6 +1,5 @@
 package com.endava.aminternship;
 
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -9,6 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class SecurityController {
+	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login(
 		@RequestParam(value = "error", required = false) String error,
@@ -16,7 +16,7 @@ public class SecurityController {
  
 		ModelAndView model = new ModelAndView();
 		if (error != null) {
-			model.addObject("error", "Invalid email?");
+			model.addObject("error", "Invalid credentials provided");
 		}
  
 		if (logout != null) {

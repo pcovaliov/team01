@@ -33,6 +33,4 @@ public class TwitterServiceImpl implements TwitterService {
 	public Tweet addTweet(Tweet tweet) {
 		return twitterDAO.insertTweet(tweet);
 	}
-
-
 }

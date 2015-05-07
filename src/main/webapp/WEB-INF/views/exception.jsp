@@ -20,7 +20,7 @@
 		  </c:otherwise>
 		</c:choose>
 
-      exception
+      Oh no, exception :(
 
     </div>
 </body>

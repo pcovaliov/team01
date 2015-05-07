@@ -22,7 +22,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public List<User> listUser(int limit, int offset) {
-
 		return userDAO.listUser(limit, offset);
 	}
 
@@ -37,7 +36,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean updateUser(User user) {
 		return userDAO.updateUser(user);
-		
 	}
 
 	@Override
