@@ -1,30 +1,25 @@
-package com.endava.aminternship.testing;
+package com.endava.aminternship.testing.services;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Random;
 
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.endava.aminternship.entity.Tweet;
 import com.endava.aminternship.entity.User;
 import com.endava.aminternship.service.interfaces.TwitterService;
 import com.endava.aminternship.service.interfaces.UserService;
+import com.endava.aminternship.testing.configuration.Registry;
 
-public class testClass {
-
-	final ApplicationContext appContext = new ClassPathXmlApplicationContext(
-			"file:src/main/webapp/WEB-INF/spring/root-context.xml");
-
+public class TestUserServiceClass {
+	final ApplicationContext appContext = Registry.getContext("test-context.xml");
+	
+	@Ignore
 	@Test
 	public void shouldFindUserById() {
 
@@ -33,7 +28,8 @@ public class testClass {
 		assertTrue(user != null);
 		assertTrue(user.getId() == 2);
 	}
-
+	
+	@Ignore
 	@Test
 	public void shouldFindUserByEmail() {
 
@@ -64,6 +60,7 @@ public class testClass {
 
 	}
 
+	@Ignore
 	@Test
 	@Transactional
 	public void shouldUpdateUser() {
@@ -81,22 +78,6 @@ public class testClass {
 		// retrieving new name from database
 		user = service.findUserById(2);
 		assertEquals(user.getLastname(), newLastName);
-	}
-
-	@Test
-	public void shouldAddTweet() {
-		UserService service = (UserService) appContext.getBean("userService");
-		User user = service.findUserById(2);
-
-		TwitterService twitterservice = (TwitterService) appContext
-				.getBean("tweetService");
-		Tweet tweet = new Tweet();
-		tweet.setUser(user);
-		tweet.setTweet("TEST Tweet");
-		twitterservice.addTweet(tweet);
-		assertTrue(tweet.getId() != null);
-		
-
 	}
 
 }
