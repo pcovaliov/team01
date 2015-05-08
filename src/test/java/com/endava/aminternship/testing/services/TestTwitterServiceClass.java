@@ -1,11 +1,13 @@
 package com.endava.aminternship.testing.services;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -82,6 +84,19 @@ public class TestTwitterServiceClass {
 
 		assertTrue(listOfTweet.size() == sizeTweetList);
 
+	}
+	
+	@After
+	@Transactional
+	public void eshouldDeleteUser() {
+
+		UserService service = (UserService) appContext.getBean("userService");
+		User user = service.findUserById(userForTweetTest.get(0).getId());
+		
+		service.removeUser(userForTweetTest.get(0).getId());
+		
+		assertNotNull(user);
+		
 	}
 
 }

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -40,7 +41,7 @@ public class User extends org.springframework.security.core.userdetails.User  im
 	@Column(name = "role" , nullable = false, columnDefinition="varchar(15) default 'ROLE_USER'")
 	private String role = "ROLE_USER";
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.REMOVE)
 	@JsonBackReference
 	private Collection<Tweet> tweets = new ArrayList<Tweet>();
 	
