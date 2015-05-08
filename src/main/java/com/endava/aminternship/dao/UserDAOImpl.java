@@ -53,7 +53,8 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public boolean updateUser(User user) {
 		User userFound = findUserByEmail(user.getEmail());
-		if( userFound == null || userFound.getId() == user.getId()){
+		System.out.println(userFound);
+		if( userFound != null && userFound.getId().equals(user.getId())){
 			sessionFactory.getCurrentSession().merge(user);
 			return true;
 		} else {
