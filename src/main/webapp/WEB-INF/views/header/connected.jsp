@@ -1,7 +1,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-
 <sec:authentication var="principal" property="principal" />
 
+<br>
 <nav class="navbar navbar-default">
         <div class="container-fluid">
           <div class="navbar-header">
@@ -20,7 +20,7 @@
               <li id="user-tweet-link"><a href="/aminternship/tweet-page">User tweet page</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-            	<li>Hello,<br> ${principal.firstname} ${principal.lastname} <br> ${principal.role}</li>
+            	<li>Hello,<br> ${principal.firstname} ${principal.lastname}</li>
               <li><a href="<c:url value='/j_spring_security_logout'/>">Logout</a></li>
             </ul>
           </div><!--/.nav-collapse -->

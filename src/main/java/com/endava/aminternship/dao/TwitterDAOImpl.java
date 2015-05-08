@@ -1,7 +1,6 @@
 package com.endava.aminternship.dao;
 
 import java.util.Collection;
-import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
@@ -20,13 +19,15 @@ public class TwitterDAOImpl implements TwitterDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Collection<Tweet> getTweetsForUser(User user, int limit, int offset) {
-		 
 		Query q = sessionFactory.getCurrentSession().createQuery("from Tweet t where t.user = :user_id order by t.date DESC");
+		
 		q.setInteger("user_id", user.getId());
 		q.setFirstResult(offset);
 		q.setMaxResults(limit);
+		
 		return q.list();
 	}
 

@@ -5,7 +5,6 @@
 <html lang="en">
 <head>
 	<%@ include file="styles/head.jsp" %>
-	
 </head>
 <body>
 	<div class="container">
@@ -23,9 +22,7 @@
 		<script type="text/javascript">
 			window.onload = activateHeaderLink('see-all-users-link');
 		</script>
-       <!--Until here header stuff -->
-
-      <!-- Main component for a primary marketing message or call to action -->
+       
      <div class="table-responsive">
             <table class="table table-striped">
               <thead>
@@ -54,14 +51,14 @@
 							</td>
 						</tr>
 			  </c:forEach>
-			  <tr>
-				    	<td><a href="${prevUserLink}">Prev</a></td>
-					    <td><a href="${nextUserLink}">Next</a></td>
-					</tr>
+			  
+			  	<tr>
+				   	<td><a href="${prevUserLink}">Prev</a></td>
+				    <td><a href="${nextUserLink}">Next</a></td>
+				</tr>
               </tbody>
             </table>
       </div>
-
     </div>
 </body>
 </html>
