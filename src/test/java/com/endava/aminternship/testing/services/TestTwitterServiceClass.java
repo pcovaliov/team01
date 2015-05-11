@@ -3,17 +3,15 @@ package com.endava.aminternship.testing.services;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import org.springframework.context.ApplicationContext;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.endava.aminternship.entity.Tweet;
 import com.endava.aminternship.entity.User;
@@ -23,80 +21,76 @@ import com.endava.aminternship.testing.configuration.Registry;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestTwitterServiceClass {
-	final ApplicationContext appContext = Registry
-			.getContext("test-context.xml");
-
-	static List<User> userForTweetTest = new ArrayList<User>();
-	static List<Tweet> tweetForTest = new ArrayList<Tweet>();
-	static int sizeTweetList;
-
-	@Before
-	public void ashouldAddUser() {
-		UserService service = (UserService) appContext.getBean("userService");
-		User user1 = new User();
-		int min = 0;
-		int max = 100;
-
+	
+	final static ApplicationContext appContext = Registry.getContext("test-context.xml");
+	//services
+	static UserService userService;
+	static TwitterService twitterService;
+	
+	//variables
+	static User testUser;
+	static Tweet testTweet;
+	
+	@BeforeClass
+	static public void contextIntialization() {
+		userService = (UserService) appContext.getBean("userService");
+		twitterService = (TwitterService) appContext.getBean("twitterService");
+		
+		//generating a dummy user to work on
+		testUser = new User();
+		
+		//used to generate user data, avoids db conflicts
 		Random r = new Random();
-		int i1 = r.nextInt(max - min + 1) + min;
-
-		user1.setEmail("testTweet" + i1 + "@mail.com");
-		user1.setFirstname("TestTweet");
-		user1.setLastname("InsertnewUser");
-
-		service.addUser(user1);
-		userForTweetTest.add(user1);
-
+		int randomNumber = r.nextInt(99999 + 1); 
+		
+		testUser.setEmail("testTweet" + randomNumber + "@mail.com");
+		testUser.setFirstname("TestTweet");
+		testUser.setLastname("InsertNewUser");
+		
+		userService.addUser(testUser);
+		//end user generation
+		
+		//generating a tweet and linking it with the user
+		testTweet = new Tweet();
+		testTweet.setUser(testUser);
+		
 	}
-
+	 @AfterClass
+	 static public void contextCleaning() {
+		 assertNotNull(testUser);
+		 userService.removeUser(testUser.getId());
+	 }
+	 
+	 //todo: refactor
+	// static List<User> userForTweetTest = new ArrayList<User>();
+	// static List<Tweet> tweetForTest = new ArrayList<Tweet>();
+	
+	
 	@Test
 	public void shouldAddTweet() {
-		UserService service = (UserService) appContext.getBean("userService");
-		User user = service.findUserById(userForTweetTest.get(0).getId());
-
-		TwitterService twitterservice = (TwitterService) appContext
-				.getBean("twitterService");
-		Tweet tweet = new Tweet();
-
-		tweet.setUser(user);
-		for (int i = 0; i < 10; i++) {
-			tweet.setTweet("TEST Tweet " + i);
-			twitterservice.addTweet(tweet);
-			tweetForTest.add(tweet);
-			// for checking number of tweets inserted
-			sizeTweetList++;
-		}
-
-		assertTrue(tweet.getId() != null);
-
+		testTweet.setId(null); //to make sure it's sent as null to insert
+		testTweet.setTweet("TEST Tweet ");
+		twitterService.addTweet(testTweet);
+		assertNotNull(testTweet.getId());
 	}
+	
 
 	@Test
 	public void shouldGetTweetsForUser() {
-		UserService service = (UserService) appContext.getBean("userService");
-		User user = service.findUserById(userForTweetTest.get(0).getId());
-
-		TwitterService twitterservice = (TwitterService) appContext
-				.getBean("twitterService");
-
-		List<Tweet> listOfTweet = (List<Tweet>) twitterservice
-				.getTweetsForUser(user, 10, 0);
-
-		assertTrue(listOfTweet.size() == sizeTweetList);
-
+		//creating the tweets for the user
+		int insertedTweets = 0;
+		
+		for (int i = 0; i < 10; i++) {
+			testTweet.setId(null); //to make sure it's sent as null to insert
+			testTweet.setTweet("TEST Tweet " + i);
+			twitterService.addTweet(testTweet);
+			assertNotNull(testTweet.getId()); //just to check it not fails ...
+			// todo: comment later
+			insertedTweets++;
+		}
+		
+		
+		List<Tweet> listOfTweets = (List<Tweet>) twitterService.getTweetsForUser(testUser, insertedTweets, 0);
+		assertTrue(listOfTweets.size() == insertedTweets);
 	}
-	
-	@After
-	@Transactional
-	public void eshouldDeleteUser() {
-
-		UserService service = (UserService) appContext.getBean("userService");
-		User user = service.findUserById(userForTweetTest.get(0).getId());
-		
-		service.removeUser(userForTweetTest.get(0).getId());
-		
-		assertNotNull(user);
-		
-	}
-
 }

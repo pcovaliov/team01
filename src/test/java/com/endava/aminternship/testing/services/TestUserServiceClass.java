@@ -4,107 +4,129 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.Random;
 
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.endava.aminternship.entity.Tweet;
+
+
+
 import com.endava.aminternship.entity.User;
-import com.endava.aminternship.service.interfaces.TwitterService;
 import com.endava.aminternship.service.interfaces.UserService;
 import com.endava.aminternship.testing.configuration.Registry;
 
 import org.junit.runners.MethodSorters;
 import org.junit.FixMethodOrder;
 
-
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+//@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestUserServiceClass {
-	final ApplicationContext appContext = Registry.getContext("test-context.xml");
-	
-	static List <User> userForTest = new ArrayList<User>() ;
-	
-	@Test
-	@Transactional
-	public void ashouldAddUser() {
-		UserService service = (UserService) appContext.getBean("userService");
-		User user1 = new User();
-		int min = 0;
-		int max = 100;
 
+	final static ApplicationContext appContext = Registry
+			.getContext("test-context.xml");
+	// services
+	static UserService userService;
+
+	// variables
+	static User testUser;
+
+	@Before
+	public void contextIntialization() {
+		userService = (UserService) appContext.getBean("userService");
+
+		// generating a dummy user to work on
+		testUser = new User();
+
+		// used to generate user data, avoids db conflicts
 		Random r = new Random();
-		int i1 = r.nextInt(max - min + 1) + min;
+		int randomNumber = r.nextInt(99999 + 1);
 
-		user1.setEmail("test" + i1 + "@mail.com");
-		user1.setFirstname("Test");
-		user1.setLastname("InsertnewUser");
-		
-		service.addUser(user1);
-		userForTest.add(user1);
-		
+		testUser.setEmail("testTweet" + randomNumber + "@mail.com");
+		testUser.setFirstname("TestTweet");
+		testUser.setLastname("InsertNewUser");
+
+		userService.addUser(testUser);
+		// end user generation
 
 	}
-	
-	@Test
-	public void bshouldFindUserById() {
 
-		UserService service = (UserService) appContext.getBean("userService");
-		User user = service.findUserById(userForTest.get(0).getId());
-		
-		assertTrue(user != null);
-		
+	@AfterClass
+	static public void contextCleaning() {
+		assertNotNull(testUser);
+		userService.removeUser(testUser.getId());
 	}
-
-	@Test
-	public void cshouldFindUserByEmail() {
-
-		UserService service = (UserService) appContext.getBean("userService");
-		User user = service.findUserByEmail(userForTest.get(0).getEmail());
-		
-		assertTrue(user != null);
-		
-	}
-
-	
 
 	@Test
 	@Transactional
-	public void dshouldUpdateUser() {
+	public void shouldAddUser() {
 
-		UserService service = (UserService) appContext.getBean("userService");
-		User user = service.findUserById(userForTest.get(0).getId());
+		User user = new User();
+		Random r = new Random();
+		int randomNumber = r.nextInt(99999 + 1);
+
+		testUser.setEmail("testTweet" + randomNumber + "@mail.com");
+		user.setEmail("test" + randomNumber + "@mail.com");
+		user.setFirstname("Test");
+		user.setLastname("InsertnewUser");
+
+		userService.addUser(user);
+
+	}
+
+	@Test
+	public void shouldFindUserById() {
+
+		User user = userService.findUserById(testUser.getId());
+
+		assertTrue(user != null);
+
+	}
+
+	@Test
+	public void shouldFindUserByEmail() {
+
+		User user = userService.findUserByEmail(testUser.getEmail());
+
+		assertTrue(user != null);
+
+	}
+
+	@Test
+	@Transactional
+	public void shouldUpdateUser() {
+
+		User user = userService.findUserById(testUser.getId());
 		System.out.println(user);
 		String newLastName = user.getLastname() + "EDIT";
 		String newFirstName = user.getFirstname() + "EDIT";
-		
+
 		user.setLastname(newLastName);
 		user.setFirstname(newFirstName);
-		System.out.println(service.updateUser(user));
+		System.out.println(userService.updateUser(user));
 
 		// retrieving new name from database
-		user = service.findUserById(userForTest.get(0).getId());
+		user = userService.findUserById(testUser.getId());
 		System.out.println(user);
 		assertEquals(user.getLastname(), newLastName);
 	}
-	
+
 	
 	@Test
 	@Transactional
-	public void eshouldDeleteUser() {
+	public void shouldDeleteUser() {
 
-		UserService service = (UserService) appContext.getBean("userService");
-		User user = service.findUserById(userForTest.get(0).getId());
-		
-		service.removeUser(userForTest.get(0).getId());
+		User user = userService.findUserById(testUser.getId());
+
+		userService.removeUser(testUser.getId());
 		
 		assertNotNull(user);
-		
+
 	}
-	
+
 }
