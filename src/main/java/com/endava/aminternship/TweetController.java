@@ -34,6 +34,7 @@ public class TweetController {
 			@RequestParam(value = "offset", required = false, defaultValue = "0") int offset,
 			@RequestParam(value = "limit", required = false, defaultValue = "10") int limit
 		) {
+		
 		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Collection<Tweet> tweetList = twiterService.getTweetsForUser(user,limit,offset);
 		map.put("tweetObject",new Tweet());            

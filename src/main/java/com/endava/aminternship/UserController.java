@@ -14,9 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.endava.aminternship.entity.User;
 import com.endava.aminternship.service.interfaces.UserService;
+import org.apache.log4j.Logger;
 
 @Controller
 public class UserController {
+
+	final static Logger logger = Logger.getLogger(UserController.class);
 	@Autowired
 	private UserService userService;
 
@@ -28,15 +31,17 @@ public class UserController {
 
 	@RequestMapping(value = "/register-user", method = RequestMethod.POST)
 	public String addUser(@Valid @ModelAttribute("user") User user,
-			BindingResult result,
-			Map<String, Object> map ) {
-		
-		if(result.hasErrors()){
-			return "/register-user";			
+			BindingResult result, Map<String, Object> map) {
+
+		if (result.hasErrors()) {
+			logger.debug("error at add user " +user);
+			return "/register-user";
 		}
+		logger.info("user was inserted " + user);
 		userService.addUser(user);
-		
-		Authentication auth = new UsernamePasswordAuthenticationToken(user,null, user.getAuthorities());
+
+		Authentication auth = new UsernamePasswordAuthenticationToken(user,
+				null, user.getAuthorities());
 		SecurityContextHolder.getContext().setAuthentication(auth);
 		return "redirect:/tweet-page";
 	}
