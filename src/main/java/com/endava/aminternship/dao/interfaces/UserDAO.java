@@ -11,6 +11,7 @@ public interface UserDAO {
 	
 	public User findUserById(Integer id);
 	public User findUserByEmail(String email);
+	public boolean isFollowing(User main, User follower);
 	
 	public List<User> listUser(int limit, int offset);
 }

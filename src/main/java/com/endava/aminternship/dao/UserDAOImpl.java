@@ -96,4 +96,23 @@ public class UserDAOImpl implements UserDAO {
 			return null;
 		}
 	}
+	
+	@Override
+	public boolean isFollowing(User main, User follower){
+		if(main == null || follower == null)
+			return false;
+		Query q = null;
+		q = sessionFactory.getCurrentSession().createQuery("from User u where u.id =? and u.followers = ?");
+		q.setInteger(0,main.getId());
+		q.setInteger(1,  follower.getId());
+		
+		
+		
+		System.out.println(q.getQueryString());
+		List result = q.list();
+		if(result.size() == 0)
+			return false;
+		else
+			return true;
+	}
 }

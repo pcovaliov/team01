@@ -5,11 +5,13 @@ import java.util.Collection;
 import java.util.Map;
 
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -66,5 +68,44 @@ public class TweetController {
 		twiterService.addTweet(insertedTweet);
 		
 		return "redirect:/tweet-page";
+	}
+	
+	@RequestMapping(value = "/tweet-page/{id}", method = RequestMethod.GET)
+	public String externalTweetsPage(
+			Map<String, Object> map, 
+			@PathVariable("id") int id,
+			@RequestParam(value = "offset", required = false, defaultValue = "0") int offset,
+			@RequestParam(value = "limit", required = false, defaultValue = "25") int limit
+		) {
+		
+		User user =userService.findUserById(id);
+		if(user == null){ //the id is not present in the db
+			return "exception";
+		}
+		
+		User currentLoggedInUser;
+		try {
+			currentLoggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		} catch (Exception e) {
+			currentLoggedInUser = null; //annonimous
+		}
+		
+		map.put("currentLoggedInUser", currentLoggedInUser);
+		
+		Collection<Tweet> tweetList = twiterService.getTweetsForUser(user,limit,offset);
+		map.put("tweetList", tweetList);
+		map.put("currentUser", user);
+		
+		if(offset < tweetList.size()){
+			String nextTweetsLink = ServletUriComponentsBuilder.fromCurrentContextPath().path("/tweet-page/"+user.getId()+"?offset="+(offset+limit)).build().toUriString();
+			map.put("nextTweetsLink", nextTweetsLink);
+		}
+		
+		if(offset >= 10){
+			String prevTweetsLink = ServletUriComponentsBuilder.fromCurrentContextPath().path("/tweet-page/"+user.getId()+"?offset="+(offset-limit)).build().toUriString();
+			map.put("prevTweetsLink", prevTweetsLink);
+		}
+		    
+		return "/external-tweet-page";
 	}
 }
