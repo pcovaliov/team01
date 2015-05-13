@@ -17,6 +17,7 @@ import com.endava.aminternship.service.interfaces.UserService;
 
 @Controller
 public class AdminController {
+	
 	@Autowired
 	private UserService userService;
 
