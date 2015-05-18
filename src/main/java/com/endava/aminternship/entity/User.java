@@ -53,11 +53,11 @@ public class User extends org.springframework.security.core.userdetails.User  im
 
 	   @ManyToMany(fetch = FetchType.EAGER, cascade={CascadeType.ALL})
 	   @JoinTable(name="following_users",
-	        joinColumns={@JoinColumn(name="ID")},
-	        inverseJoinColumns={@JoinColumn(name="following_id")})
+	        joinColumns={@JoinColumn(name="main_user", nullable=false, updatable = false)},
+	        inverseJoinColumns={@JoinColumn(name="following_user", nullable=false, updatable = false)})
 	    private Set<User> followers = new HashSet<User>();
 	 
-	    @ManyToMany(mappedBy="followers")
+	    @ManyToMany(mappedBy="followers",fetch = FetchType.LAZY)
 	    private Set<User> following = new HashSet<User>();
 	    
 	    
@@ -128,6 +128,9 @@ public class User extends org.springframework.security.core.userdetails.User  im
 	}
 	public void addFollower(User follower) {
 		this.followers.add(follower);
+	}
+	public void removeFollower(User follower) {
+		this.followers.remove(follower);
 	}
 
 	public Set<User> getFollowing() {

@@ -102,14 +102,12 @@ public class UserDAOImpl implements UserDAO {
 		if(main == null || follower == null)
 			return false;
 		Query q = null;
-		q = sessionFactory.getCurrentSession().createQuery("from User u where u.id =? and u.followers = ?");
+		q = sessionFactory.getCurrentSession().createQuery("from User u join u.followers fu where u.id=? and fu.id = ?");
 		q.setInteger(0,main.getId());
 		q.setInteger(1,  follower.getId());
 		
-		
-		
-		System.out.println(q.getQueryString());
 		List result = q.list();
+		
 		if(result.size() == 0)
 			return false;
 		else

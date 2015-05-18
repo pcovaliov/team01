@@ -69,18 +69,19 @@ public class UserController {
 		}
 		
 		if(!failFlag){
-			User user =userService.findUserById(id);
+			User user = userService.findUserById(id);
 			if(user == null){ //the id is not present in the db
 				response = "User not found";
 				return response;
 			} else {
 				if(userService.isFollowing(user,currentLoggedInUser)){
-					response = "already following";
+					user.removeFollower(currentLoggedInUser);
+					response = "already following, following removed";
 				} else {
-					response = "not following";
+					user.addFollower(currentLoggedInUser);
+					response = "was not following, now following";
 				}
-//				user.addFollower(currentLoggedInUser);
-//				userService.updateUser(user);
+				userService.updateUser(user);
 			}
 		}
 		
