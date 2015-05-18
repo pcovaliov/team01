@@ -39,7 +39,7 @@
               
               <c:forEach items="${usersList}" var="user">
 						<tr>
-							<td>${user.getId()}</td>
+							<td><a href="/aminternship/tweet-page/${user.getId()}">${user.getId()}</a></td>
 							<td>${user.getFirstname()}</td>
 							<td>${user.getLastname()}</td>
 							<td>${user.getEmail()}</td>
