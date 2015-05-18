@@ -69,41 +69,31 @@ function activateHeaderLink(linkId){
     };
 })(jQuery);
 
-// to fix
-function publishTweet(thisObject) {
-	postData = $(thisObject).serializeArray();
-	$.ajax({
-		headers: {'Content-Type': 'application/json'},
-		type : "POST",
-		data : postData,
-		success : function(data, textStatus, jqXHR) {
-			tableBodyPoint = $('#tweet-table > tbody');
-			tableBodyPoint.lastChild
-			tableBody = false;
-			// construct the table row
-			tr = '';
-			tr += '<tr>';
-			tr += '<td>';
-			tr += 'id';
-			tr += '</td>';
-			tr += '<td>';
-			tr += '</td>';
-			tr += '<td>';
-			tr += data['date'];
-			tr += '</td>';
-			tr += '</tr>';
-			// end contruct row
-			if (tableBodyPoint.children().size() > 0) {
-				alert('Consider when there are tweets to insert before');
-			} else {
-				tableBodyPoint.append(tr);
+$( document ).ready(function() {
+	$("#follow-button").click(function(e){	
+		$.ajax({
+		   type: "GET",
+		   url: "/aminternship/follow/2",
+		   success : function(data, textStatus, jqXHR) {
+				alert(data);
+				switch(data) {
+					case "already following, following removed":
+						$('#follow-button').val('Follow');
+						break;
+					case "was not following, now following":
+						$('#follow-button').val('Unfollow');
+						break;
+					default:
+						alert("Cacoita error, posibil nu esti lgoat");
+				}
+				
+			},
+			error : function(jqXHR, textStatus, errorThrown) {
+				alert("There is an error with tweet publishing");
 			}
+		});
 
-		},
-		error : function(jqXHR, textStatus, errorThrown) {
-			alert("There is an error with tweet publishing");
-		}
 	});
+});
 
-	return false;
-}
+

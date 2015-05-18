@@ -62,6 +62,7 @@
       		This is the page for: <br>
             ${currentUser.firstname}
             ${currentUser.lastname} <br>
+            ${currentUser.id} <br>
             
             <c:choose>
 		      <c:when test="${pageContext.request.userPrincipal.authenticated}"> 
@@ -71,7 +72,16 @@
 								      </c:when>
 							
 								      <c:otherwise>
-								      		follow button
+								      
+									      <c:choose>
+										      <c:when test="${isFollowing}">
+										      	<input type="submit" id="follow-button" class="btn btn-primary" value="Unfollow" />
+										      </c:when>
+										
+										      <c:otherwise>
+										      	<input type="submit" id="follow-button" class="btn btn-primary" value="Follow" />
+										      </c:otherwise>
+										  </c:choose>
 								      </c:otherwise>
 								</c:choose>
 		      </c:when>

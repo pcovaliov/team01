@@ -91,6 +91,7 @@ public class TweetController {
 		}
 		
 		map.put("currentLoggedInUser", currentLoggedInUser);
+		map.put("isFollowing", userService.isFollowing(user,currentLoggedInUser));
 		
 		Collection<Tweet> tweetList = twiterService.getTweetsForUser(user,limit,offset);
 		map.put("tweetList", tweetList);
