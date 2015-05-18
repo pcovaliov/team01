@@ -125,8 +125,8 @@ public class TweetController {
 		SecurityUser secUser = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		User user = secUser.getUserObject();
 		
-		Set<User> usersFollowed = user.getFollowing();
-		Collection<Tweet> tweetList = twiterService.getTweetsForUsers(usersFollowed);
+		Collection<Tweet> tweetList = twiterService.getNewsFeedForUser(user);
+		System.out.println(tweetList.size());
 		map.put("tweetList", tweetList);
 		    
 		return "/news-feed";
