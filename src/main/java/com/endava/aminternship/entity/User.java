@@ -3,6 +3,8 @@ package com.endava.aminternship.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,9 +12,12 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
+import javax.persistence.JoinColumn;
 
 import org.codehaus.jackson.annotate.JsonBackReference;
 import org.springframework.security.core.GrantedAuthority;
@@ -45,6 +50,17 @@ public class User extends org.springframework.security.core.userdetails.User  im
 	@JsonBackReference
 	private Collection<Tweet> tweets = new ArrayList<Tweet>();
 	
+
+	   @ManyToMany(fetch = FetchType.EAGER, cascade={CascadeType.ALL})
+	   @JoinTable(name="following_users",
+	        joinColumns={@JoinColumn(name="main_user", nullable=false, updatable = false)},
+	        inverseJoinColumns={@JoinColumn(name="following_user", nullable=false, updatable = false)})
+	    private Set<User> followers = new HashSet<User>();
+	 
+	    @ManyToMany(mappedBy="followers",fetch = FetchType.LAZY)
+	    private Set<User> following = new HashSet<User>();
+	    
+	    
 	public User(){
 		super("Anonimous", "", true, true, true, true, new ArrayList<GrantedAuthority>());
 	};
@@ -104,6 +120,28 @@ public class User extends org.springframework.security.core.userdetails.User  im
 		this.tweets = tweets;
 	}
 
+	public Set<User> getFollowers() {
+		return followers;
+	}
+	public void setFollowers(Set<User> followers) {
+		this.followers = followers;
+	}
+	public void addFollower(User follower) {
+		this.followers.add(follower);
+	}
+	public void removeFollower(User follower) {
+		this.followers.remove(follower);
+	}
+
+	public Set<User> getFollowing() {
+		return following;
+	}
+	public void setFollowing(Set<User> following) {
+		this.following = following;
+	}
+	public void addFollowing(User following) {
+		this.following.add(following);
+	}
 	//security related 
 	
 	public Collection<GrantedAuthority> getAuthorities() {

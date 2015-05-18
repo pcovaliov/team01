@@ -42,4 +42,9 @@ public class UserServiceImpl implements UserService {
 	public User findUserByEmail(String email) {
 		return userDAO.findUserByEmail(email);
 	}
+	
+	@Override
+	public boolean isFollowing(User main, User follower){
+		return userDAO.isFollowing(main, follower);
+	}
 }

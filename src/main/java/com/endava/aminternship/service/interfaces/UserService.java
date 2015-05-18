@@ -13,4 +13,6 @@ public interface UserService {
 	
 	public User findUserById(Integer id);
 	public User findUserByEmail(String email);
+	
+	public boolean isFollowing(User main, User follower);
 }

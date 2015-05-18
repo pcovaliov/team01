@@ -36,4 +36,5 @@ public class TwitterDAOImpl implements TwitterDAO {
 		sessionFactory.getCurrentSession().save(tweet);
 		return tweet;
 	}
+	
 }
