@@ -1,6 +1,7 @@
 package com.endava.aminternship.dao;
 
 import java.util.Collection;
+import java.util.Set;
 
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
@@ -35,6 +36,12 @@ public class TwitterDAOImpl implements TwitterDAO {
 	public Tweet insertTweet(Tweet tweet) {
 		sessionFactory.getCurrentSession().save(tweet);
 		return tweet;
+	}
+
+	@Override
+	public Set<Tweet> getTweetsForUsers(Set<User> usersSet) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

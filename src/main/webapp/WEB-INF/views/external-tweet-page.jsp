@@ -72,16 +72,17 @@
 								      </c:when>
 							
 								      <c:otherwise>
-								      
+								      	<input type="submit" id="follow-button" class="btn btn-primary"
 									      <c:choose>
 										      <c:when test="${isFollowing}">
-										      	<input type="submit" id="follow-button" class="btn btn-primary" value="Unfollow" />
+										      	 value="Unfollow" 
 										      </c:when>
 										
 										      <c:otherwise>
-										      	<input type="submit" id="follow-button" class="btn btn-primary" value="Follow" />
+										      	value="Follow"
 										      </c:otherwise>
 										  </c:choose>
+										  onclick="changeFollowRelationship(${currentUser.id})"/>
 								      </c:otherwise>
 								</c:choose>
 		      </c:when>

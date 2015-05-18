@@ -3,6 +3,7 @@ package com.endava.aminternship;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -108,5 +109,22 @@ public class TweetController {
 		}
 		    
 		return "/external-tweet-page";
+	}
+	
+	
+	@RequestMapping(value = "/news-feed", method = RequestMethod.GET)
+	public String newsFeedPage(
+			Map<String, Object> map, 
+			@RequestParam(value = "offset", required = false, defaultValue = "0") int offset,
+			@RequestParam(value = "limit", required = false, defaultValue = "10") int limit
+		) {
+		
+		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		//Set<User> usersFollowed = user.getFollowing();
+		//System.out.println(usersFollowed.size());
+		//Collection<Tweet> tweetList = twiterService.getTweetsForUser(user,limit,offset);
+		//map.put("tweetList", tweetList);
+		    
+		return "/news-feed";
 	}
 }

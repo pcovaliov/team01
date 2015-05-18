@@ -18,6 +18,7 @@
               <li id="home-link"><a href="/aminternship/">Home</a></li>
               <li id="see-all-users-link"><a href="/aminternship/admin/view-users">See all users</a></li>
               <li id="user-tweet-link"><a href="/aminternship/tweet-page">User tweet page</a></li>
+              <li id="news-feed"><a href="/aminternship/news-feed">News Feed</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
             	<li>Hello,<br> ${principal.firstname} ${principal.lastname}</li>

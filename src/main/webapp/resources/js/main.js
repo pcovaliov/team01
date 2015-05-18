@@ -69,31 +69,28 @@ function activateHeaderLink(linkId){
     };
 })(jQuery);
 
-$( document ).ready(function() {
-	$("#follow-button").click(function(e){	
-		$.ajax({
-		   type: "GET",
-		   url: "/aminternship/follow/2",
-		   success : function(data, textStatus, jqXHR) {
-				alert(data);
-				switch(data) {
-					case "already following, following removed":
-						$('#follow-button').val('Follow');
-						break;
-					case "was not following, now following":
-						$('#follow-button').val('Unfollow');
-						break;
-					default:
-						alert("Cacoita error, posibil nu esti lgoat");
-				}
-				
-			},
-			error : function(jqXHR, textStatus, errorThrown) {
-				alert("There is an error with tweet publishing");
+function changeFollowRelationship(id){ //to follow or not to follow
+	$.ajax({
+	   type: "GET",
+	   url: "/aminternship/follow/"+id,
+	   success : function(data, textStatus, jqXHR) {
+			alert(data);
+			switch(data) {
+				case "already following, following removed":
+					$('#follow-button').val('Follow');
+					break;
+				case "was not following, now following":
+					$('#follow-button').val('Unfollow');
+					break;
+				default:
+					alert("Cacoita error, posibil nu esti lgoat");
 			}
-		});
-
+			
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			alert("There is an error with tweet publishing");
+		}
 	});
-});
+}
 
 

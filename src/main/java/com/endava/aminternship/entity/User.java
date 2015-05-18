@@ -57,7 +57,7 @@ public class User extends org.springframework.security.core.userdetails.User  im
 	        inverseJoinColumns={@JoinColumn(name="following_user", nullable=false, updatable = false)})
 	    private Set<User> followers = new HashSet<User>();
 	 
-	    @ManyToMany(mappedBy="followers",fetch = FetchType.LAZY)
+	    @ManyToMany(mappedBy="followers",fetch = FetchType.EAGER)
 	    private Set<User> following = new HashSet<User>();
 	    
 	    
