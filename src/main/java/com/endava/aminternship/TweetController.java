@@ -121,12 +121,13 @@ public class TweetController {
 			@RequestParam(value = "offset", required = false, defaultValue = "0") int offset,
 			@RequestParam(value = "limit", required = false, defaultValue = "10") int limit
 		) {
+		
 		SecurityUser secUser = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		User user = secUser.getUserObject();
-		//Set<User> usersFollowed = user.getFollowing();
-		//System.out.println(usersFollowed.size());
-		//Collection<Tweet> tweetList = twiterService.getTweetsForUser(user,limit,offset);
-		//map.put("tweetList", tweetList);
+		
+		Set<User> usersFollowed = user.getFollowing();
+		Collection<Tweet> tweetList = twiterService.getTweetsForUsers(usersFollowed);
+		map.put("tweetList", tweetList);
 		    
 		return "/news-feed";
 	}

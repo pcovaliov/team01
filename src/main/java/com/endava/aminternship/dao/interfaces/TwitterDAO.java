@@ -9,6 +9,6 @@ import com.endava.aminternship.entity.User;
 public interface TwitterDAO {
 
 	public Collection<Tweet> getTweetsForUser(User user, int limit, int offset);
-	public Set<Tweet> getTweetsForUsers(Set<User> usersSet);
+	public Collection<Tweet> getTweetsForUsers(Set<User> usersSet);
 	public Tweet insertTweet(Tweet tweet);
 }

@@ -33,7 +33,7 @@ public class Tweet implements Serializable{
 	@Column(name="post_date")
 	private Date date = new Date();
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_ID", nullable = false)
 	private User user;
 	

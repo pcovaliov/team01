@@ -1,6 +1,7 @@
 package com.endava.aminternship.dao;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 import org.hibernate.Query;
@@ -39,9 +40,11 @@ public class TwitterDAOImpl implements TwitterDAO {
 	}
 
 	@Override
-	public Set<Tweet> getTweetsForUsers(Set<User> usersSet) {
-		// TODO Auto-generated method stub
-		return null;
+	public Collection<Tweet> getTweetsForUsers(Set<User> usersSet) {
+		System.out.println(usersSet.size());
+		Query q = sessionFactory.getCurrentSession().createQuery("from Tweet t where t.user in :user_id_list order by t.date DESC");
+		q.setParameterList("user_id_list", usersSet);
+		return q.list();
 	}
 	
 }

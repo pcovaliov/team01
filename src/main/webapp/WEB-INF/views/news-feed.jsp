@@ -31,7 +31,31 @@
 
         
         <div class="col-lg-8">
-          bbb
+          <h2>User Tweets</h2>
+          <div class="table-responsive">
+            <table  id="tweet-table" class="table table-striped">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Tweet</th>
+                  <th>Date</th>
+                  <th>User</th>
+                  <th>Avatar</th>
+                </tr>
+              </thead>
+              <tbody>
+	              <c:forEach items="${tweetList}" var="tweet">
+							<tr>
+								<td>${tweet.getId()}</td>
+								<td>${tweet.getTweet()}</td>
+								<td><fmt:formatDate value="${tweet.getDate()}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+								<td>${tweet.getUser().getFirstname()} ${tweet.getUser().getLastname()}</td>
+                 				<td>Avatar</th>
+							</tr>
+				  </c:forEach>
+              </tbody>
+            </table>
+        </div>
        </div>
        
       <div class="col-lg-4">

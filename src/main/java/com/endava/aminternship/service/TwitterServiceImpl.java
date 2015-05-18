@@ -3,12 +3,13 @@ package com.endava.aminternship.service;
 import java.util.Collection;
 
 
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.endava.aminternship.dao.interfaces.TwitterDAO;
-
 import com.endava.aminternship.entity.Tweet;
 import com.endava.aminternship.entity.User;
 import com.endava.aminternship.service.interfaces.TwitterService;
@@ -32,5 +33,10 @@ public class TwitterServiceImpl implements TwitterService {
 	@Transactional
 	public Tweet addTweet(Tweet tweet) {
 		return twitterDAO.insertTweet(tweet);
+	}
+
+	@Override
+	public Collection<Tweet> getTweetsForUsers(Set<User> usersSet) {
+		return twitterDAO.getTweetsForUsers(usersSet);
 	}
 }
