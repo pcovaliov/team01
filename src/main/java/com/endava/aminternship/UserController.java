@@ -1,5 +1,7 @@
 package com.endava.aminternship;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -16,13 +18,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.endava.aminternship.entity.SecurityUser;
 import com.endava.aminternship.entity.User;
+import com.endava.aminternship.service.interfaces.ImageProcessorService;
 import com.endava.aminternship.service.interfaces.UserService;
 
 import org.apache.log4j.Logger;
+
+import com.cloudinary.*;
+import com.cloudinary.utils.ObjectUtils;
 
 @Controller
 public class UserController {
@@ -30,6 +37,8 @@ public class UserController {
 	final static Logger logger = Logger.getLogger(UserController.class);
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private ImageProcessorService imageProcessor;
 
 	@RequestMapping(value = "/register-user", method = RequestMethod.GET)
 	public String registerUserForm(Map<String, Object> map) {
@@ -39,12 +48,24 @@ public class UserController {
 
 	@RequestMapping(value = "/register-user", method = RequestMethod.POST)
 	public String addUser(@Valid @ModelAttribute("user") User user,
+			@RequestParam MultipartFile image,
 			BindingResult result, Map<String, Object> map) {
 
 		if (result.hasErrors()) {
 			logger.debug("error at add user " +user);
+			System.out.println("error");
 			return "/register-user";
 		}
+		System.out.println("getting image");
+		if (!image.isEmpty()) {
+			if(imageProcessor.isValidImage(image)){
+				String uploadedFilePath = imageProcessor.uploadImage(image);
+				user.setImageUrl(uploadedFilePath);
+			} else {
+				System.out.println("not valid image");
+			}
+		} 
+		
 		logger.info("user was inserted " + user);
 		userService.addUser(user);
 		SecurityUser secUser = new SecurityUser(user);
