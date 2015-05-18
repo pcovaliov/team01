@@ -21,7 +21,7 @@
               <li id="news-feed"><a href="/aminternship/news-feed">News Feed</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-            	<li>Hello,<br> ${principal.firstname} ${principal.lastname}</li>
+            	<li>Hello,<br> ${principal.userObject.firstname} ${principal.userObject.lastname}</li>
               <li><a href="<c:url value='/j_spring_security_logout'/>">Logout</a></li>
             </ul>
           </div><!--/.nav-collapse -->

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.endava.aminternship.entity.SecurityUser;
 import com.endava.aminternship.entity.User;
 import com.endava.aminternship.service.interfaces.UserService;
 
@@ -44,9 +45,9 @@ public class UserController {
 		}
 		logger.info("user was inserted " + user);
 		userService.addUser(user);
-
-		Authentication auth = new UsernamePasswordAuthenticationToken(user,
-				null, user.getAuthorities());
+		SecurityUser secUser = new SecurityUser(user);
+		Authentication auth = new UsernamePasswordAuthenticationToken(secUser,
+				null, secUser.getAuthorities());
 		SecurityContextHolder.getContext().setAuthentication(auth);
 		return "redirect:/tweet-page";
 	}
@@ -61,7 +62,8 @@ public class UserController {
 		
 		User currentLoggedInUser;
 		try {
-			currentLoggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			SecurityUser secUser = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			currentLoggedInUser = secUser.getUserObject();
 		} catch (Exception e) {
 			currentLoggedInUser = null; //annonimous
 			response ="NOT LOGGED IN";

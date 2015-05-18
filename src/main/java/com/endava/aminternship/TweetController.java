@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.endava.aminternship.entity.SecurityUser;
 import com.endava.aminternship.entity.Tweet;
 import com.endava.aminternship.entity.User;
 import com.endava.aminternship.service.interfaces.TwitterService;
@@ -38,7 +39,8 @@ public class TweetController {
 			@RequestParam(value = "limit", required = false, defaultValue = "10") int limit
 		) {
 		
-		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		SecurityUser secUser = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = secUser.getUserObject();
 		Collection<Tweet> tweetList = twiterService.getTweetsForUser(user,limit,offset);
 		map.put("tweetObject",new Tweet());            
 		map.put("tweetList", tweetList);
@@ -60,11 +62,11 @@ public class TweetController {
 	@RequestMapping(value = "/tweet-page" , method = RequestMethod.POST)
 	public String addTweet(@Valid @ModelAttribute("tweetObject") Tweet insertedTweet, BindingResult bindingResult,Map<String, Object> map) {
 		if(bindingResult.hasErrors()){
-			System.out.println("error found");
 			return "/tweet-page";	
 		}
-		User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		System.out.println(insertedTweet);
+		SecurityUser secUser = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User currentUser = secUser.getUserObject();
+		
 		insertedTweet.setUser(currentUser);
 		twiterService.addTweet(insertedTweet);
 		
@@ -86,7 +88,8 @@ public class TweetController {
 		
 		User currentLoggedInUser;
 		try {
-			currentLoggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			SecurityUser secUser = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			currentLoggedInUser = secUser.getUserObject();
 		} catch (Exception e) {
 			currentLoggedInUser = null; //annonimous
 		}
@@ -118,8 +121,8 @@ public class TweetController {
 			@RequestParam(value = "offset", required = false, defaultValue = "0") int offset,
 			@RequestParam(value = "limit", required = false, defaultValue = "10") int limit
 		) {
-		
-		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		SecurityUser secUser = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = secUser.getUserObject();
 		//Set<User> usersFollowed = user.getFollowing();
 		//System.out.println(usersFollowed.size());
 		//Collection<Tweet> tweetList = twiterService.getTweetsForUser(user,limit,offset);

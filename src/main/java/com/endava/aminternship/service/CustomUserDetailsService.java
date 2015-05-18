@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.endava.aminternship.dao.interfaces.UserDAO;
+import com.endava.aminternship.entity.SecurityUser;
 
 @Service("userDetailsService")
 public class CustomUserDetailsService implements UserDetailsService {
@@ -20,9 +21,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(final String username) 
 		throws UsernameNotFoundException {
 		com.endava.aminternship.entity.User user = userDao.findUserByEmail(username);
-		System.out.println(user.getRole());
-		return user;
+		SecurityUser secUser = new SecurityUser(user);
+		return secUser;
 	}
+	
+	
  
 	// Converts our "User" to
 	// org.springframework.security.core.userdetails.User
