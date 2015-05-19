@@ -113,4 +113,20 @@ public class UserDAOImpl implements UserDAO {
 		else
 			return true;
 	}
+
+	@Override
+	public List<User> listUser() {
+		Query q = null;
+		List<User> userList = null;
+
+		try {
+			logger.info(" getting list of users ");
+			q = sessionFactory.getCurrentSession().createQuery("from User");
+			userList = q.list();
+		} catch (Exception e) {
+			logger.error(" exception at getting list of user ");
+		}
+
+		return userList;
+	}
 }

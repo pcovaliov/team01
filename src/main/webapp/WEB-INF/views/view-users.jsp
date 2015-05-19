@@ -24,7 +24,7 @@
 		</script>
        
      <div class="table-responsive">
-            <table class="table table-striped">
+            <table id="all-users" class="table table-striped">
               <thead>
                 <tr>
                   <th>#</th>
@@ -43,7 +43,19 @@
 							<td>${user.getFirstname()}</td>
 							<td>${user.getLastname()}</td>
 							<td>${user.getEmail()}</td>
-							<td>Avatar will be here</td>
+							<td>
+								<c:set var="avatarUrl" value="${user.imageUrl}" />
+								<img src="
+								<c:choose>
+									<c:when test="${empty avatarUrl}">
+										/aminternship/resources/images/user.png
+									</c:when>
+										
+									<c:otherwise>${avatarUrl}
+									</c:otherwise>
+								</c:choose>
+								" class="img-thumbnail" alt="Avatar" width="50" height="50">
+							</td>
 							<td>
 								<a href="/aminternship/admin/delete-user/${user.getId()}">delete</a>
 									/
@@ -51,11 +63,6 @@
 							</td>
 						</tr>
 			  </c:forEach>
-			  
-			  	<tr>
-				   	<td><a href="${prevUserLink}">Prev</a></td>
-				    <td><a href="${nextUserLink}">Next</a></td>
-				</tr>
               </tbody>
             </table>
       </div>

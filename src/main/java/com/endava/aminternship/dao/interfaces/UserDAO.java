@@ -14,4 +14,5 @@ public interface UserDAO {
 	public boolean isFollowing(User main, User follower);
 	
 	public List<User> listUser(int limit, int offset);
+	public List<User> listUser();
 }

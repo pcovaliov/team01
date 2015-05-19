@@ -10,9 +10,11 @@ public interface UserService {
 	public void removeUser(Integer id);
 
 	public List<User> listUser(int limit, int offset);
+	public List<User> listUser();
 	
 	public User findUserById(Integer id);
 	public User findUserByEmail(String email);
 	
 	public boolean isFollowing(User main, User follower);
+	
 }

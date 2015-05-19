@@ -47,4 +47,9 @@ public class UserServiceImpl implements UserService {
 	public boolean isFollowing(User main, User follower){
 		return userDAO.isFollowing(main, follower);
 	}
+
+	@Override
+	public List<User> listUser() {
+		return userDAO.listUser();
+	}
 }

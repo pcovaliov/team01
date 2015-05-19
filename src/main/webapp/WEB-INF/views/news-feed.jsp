@@ -30,7 +30,7 @@
       <div class="row">
 
         
-        <div class="col-lg-8">
+        <div class="col-lg-12">
           <h2>User Tweets</h2>
           <div class="table-responsive">
             <table  id="tweet-table" class="table table-striped">
@@ -50,20 +50,25 @@
 								<td>${tweet.getTweet()}</td>
 								<td><fmt:formatDate value="${tweet.getDate()}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 								<td>${tweet.getUser().getFirstname()} ${tweet.getUser().getLastname()}</td>
-                 				<td>Avatar</th>
+                 				<td>
+                 					<c:set var="avatarUrl" value="${tweet.getUser().imageUrl}" />
+										<img src="
+										<c:choose>
+											<c:when test="${empty avatarUrl}">
+												/aminternship/resources/images/user.png
+											</c:when>
+												
+											<c:otherwise>${avatarUrl}
+											</c:otherwise>
+										</c:choose> 
+										" class="img-thumbnail" alt="Avatar" width="50" height="50">
+                 				</th>
 							</tr>
 				  </c:forEach>
               </tbody>
             </table>
         </div>
        </div>
-       
-      <div class="col-lg-4">
-			aaa
-            
-
-        </div>
-
     </div>
 </body>
 </html>
