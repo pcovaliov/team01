@@ -75,25 +75,12 @@ public class UserController {
 	}
 	
 	@RequestMapping("/view-users")
-	public String viewUsers(Map<String, Object> map,
-			@RequestParam(value = "offset", required = false, defaultValue = "0") int offset,
-			@RequestParam(value = "limit", required = false, defaultValue = "10") int limit	) {
-		
-		map.put("usersList", userService.listUser(limit, offset));
-		
-		if(offset < map.size()){
-			String nextUserLink = ServletUriComponentsBuilder.fromCurrentContextPath().path("/admin/view-users?offset="+(offset+limit)).build().toUriString();
-			map.put("nextUserLink", nextUserLink);
-		}
-			
-		if(offset >= 10){
-			String prevUserLink = ServletUriComponentsBuilder.fromCurrentContextPath().path("/admin/view-users?offset="+(offset-limit)).build().toUriString();
-			map.put("prevUserLink", prevUserLink);
-		}
+	public String viewUsers(Map<String, Object> map) {
+		map.put("usersList", userService.listUser());
 		return "/view-users";
 	}
 	
-	@RequestMapping(value = "/follow/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/follow/{id}", method = RequestMethod.GET) //todo: change to post
 	public @ResponseBody String followUser(
 			@PathVariable("id") int id,
 			Map<String, Object> map

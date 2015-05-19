@@ -1,3 +1,11 @@
+$(document).ready(function(){
+	$('#tweet-table').dataTable( {
+        "order": [[ 2, "desc" ]]
+    } );
+    $('#all-users').DataTable();
+});
+
+
 function activateHeaderLink(linkId){
 	$('#'+linkId).addClass("active");
 }

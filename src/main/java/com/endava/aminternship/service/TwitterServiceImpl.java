@@ -39,4 +39,9 @@ public class TwitterServiceImpl implements TwitterService {
 	public Collection<Tweet> getNewsFeedForUser(User user) {
 		return twitterDAO.getNewsFeedForUser(user);
 	}
+
+	@Override
+	public Collection<Tweet> getAllTweetsForUser(User user) {
+		return twitterDAO.getAllTweetsForUser(user);
+	}
 }

@@ -46,6 +46,14 @@ public class TwitterDAOImpl implements TwitterDAO {
 		tweetQuerry.setInteger(0,  user.getId());
 		return tweetQuerry.list();
 	}
+
+	@Override
+	public Collection<Tweet> getAllTweetsForUser(User user) {
+		Query q = sessionFactory.getCurrentSession().createQuery("from Tweet t where t.user = :user_id order by t.date DESC");
+		q.setInteger("user_id", user.getId());
+		
+		return q.list();
+	}
 	
 	
 	

@@ -28,8 +28,6 @@
     </script>
 
       <div class="row">
-
-        
         <div class="col-lg-8">
           <h2>User Tweets</h2>
           <div class="table-responsive">
@@ -49,26 +47,35 @@
 								<td><fmt:formatDate value="${tweet.getDate()}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 							</tr>
 				  </c:forEach>
-				    <tr>
-				    	<td><a href="${prevTweetsLink}">Prev</a></td>
-					    <td><a href="${nextTweetsLink}">Next</a></td>
-					</tr>
               </tbody>
             </table>
         </div>
        </div>
        
-      <div class="col-lg-4">
-      		This is the page for: <br>
-            ${currentUser.firstname}
-            ${currentUser.lastname} <br>
-            ${currentUser.id} <br>
-            
-            <c:choose>
+	<div class="col-lg-4">
+			<table>
+				<tr><td>Owner of the page</td></tr>
+				<tr><td>${currentUser.firstname}</td></tr>
+				<tr><td>${currentUser.lastname}</td></tr>
+				<tr><td>
+					            <c:set var="avatarUrl" value="${currentUser.imageUrl}" />
+			<img src="
+				<c:choose>
+					<c:when test="${empty avatarUrl}">
+						/aminternship/resources/images/user.png
+					</c:when>
+						
+					<c:otherwise>${avatarUrl}
+					</c:otherwise>
+				</c:choose>
+				" class="img-thumbnail" alt="Avatar" width="50" height="50">
+				</td></tr>
+				
+				<tr><td>             <c:choose>
 		      <c:when test="${pageContext.request.userPrincipal.authenticated}"> 
 		      		            <c:choose>
 								      <c:when test="${currentLoggedInUser.id ==currentUser.id}"> 
-								     		you are the owner of this Page
+								     		You are the owner of this Page
 								      </c:when>
 							
 								      <c:otherwise>
@@ -90,7 +97,8 @@
 		      <c:otherwise>
 		      		Please login to follow
 		      </c:otherwise>
-			</c:choose>
+			</c:choose> </td></tr>
+			</table>
         </div>
 
     </div>

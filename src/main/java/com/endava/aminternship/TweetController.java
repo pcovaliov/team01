@@ -34,27 +34,20 @@ public class TweetController {
 
 	@RequestMapping(value = "/tweet-page", method = RequestMethod.GET)
 	public String registerUserForm(
-			Map<String, Object> map, 
-			@RequestParam(value = "offset", required = false, defaultValue = "0") int offset,
-			@RequestParam(value = "limit", required = false, defaultValue = "10") int limit
+			Map<String, Object> map
 		) {
 		
-		SecurityUser secUser = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		User user = secUser.getUserObject();
-		Collection<Tweet> tweetList = twiterService.getTweetsForUser(user,limit,offset);
+		User user = null;
+		try {
+			SecurityUser secUser = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			user = secUser.getUserObject();
+		} catch (Exception e) { //ClassCastException String to User/SecurityUser -> invalid session
+			return "redirect:/login";
+		}
+		
+		Collection<Tweet> tweetList = twiterService.getAllTweetsForUser(user);
 		map.put("tweetObject",new Tweet());            
 		map.put("tweetList", tweetList);
-		
-		if(offset < tweetList.size()){
-		String nextTweetsLink = ServletUriComponentsBuilder.fromCurrentContextPath().path("/tweet-page?offset="+(offset+limit)).build().toUriString();
-		map.put("nextTweetsLink", nextTweetsLink);
-		}
-		
-		if(offset >= 10){
-			String prevTweetsLink = ServletUriComponentsBuilder.fromCurrentContextPath().path("/tweet-page?offset="+(offset-limit)).build().toUriString();
-			map.put("prevTweetsLink", prevTweetsLink);
-		}
-			   
 		    
 		return "/tweet-page";
 	}
@@ -64,8 +57,13 @@ public class TweetController {
 		if(bindingResult.hasErrors()){
 			return "/tweet-page";	
 		}
-		SecurityUser secUser = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		User currentUser = secUser.getUserObject();
+		User currentUser = null;
+		try {
+			SecurityUser secUser = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			currentUser = secUser.getUserObject();
+		} catch (Exception e) { //ClassCastException String to User/SecurityUser -> invalid session
+			return "redirect:/login";
+		}
 		
 		insertedTweet.setUser(currentUser);
 		twiterService.addTweet(insertedTweet);
@@ -76,12 +74,10 @@ public class TweetController {
 	@RequestMapping(value = "/tweet-page/{id}", method = RequestMethod.GET)
 	public String externalTweetsPage(
 			Map<String, Object> map, 
-			@PathVariable("id") int id,
-			@RequestParam(value = "offset", required = false, defaultValue = "0") int offset,
-			@RequestParam(value = "limit", required = false, defaultValue = "25") int limit
+			@PathVariable("id") int id
 		) {
 		
-		User user =userService.findUserById(id);
+		User user = userService.findUserById(id);
 		if(user == null){ //the id is not present in the db
 			return "exception";
 		}
@@ -97,19 +93,9 @@ public class TweetController {
 		map.put("currentLoggedInUser", currentLoggedInUser);
 		map.put("isFollowing", userService.isFollowing(user,currentLoggedInUser));
 		
-		Collection<Tweet> tweetList = twiterService.getTweetsForUser(user,limit,offset);
+		Collection<Tweet> tweetList = twiterService.getAllTweetsForUser(user);
 		map.put("tweetList", tweetList);
 		map.put("currentUser", user);
-		
-		if(offset < tweetList.size()){
-			String nextTweetsLink = ServletUriComponentsBuilder.fromCurrentContextPath().path("/tweet-page/"+user.getId()+"?offset="+(offset+limit)).build().toUriString();
-			map.put("nextTweetsLink", nextTweetsLink);
-		}
-		
-		if(offset >= 10){
-			String prevTweetsLink = ServletUriComponentsBuilder.fromCurrentContextPath().path("/tweet-page/"+user.getId()+"?offset="+(offset-limit)).build().toUriString();
-			map.put("prevTweetsLink", prevTweetsLink);
-		}
 		    
 		return "/external-tweet-page";
 	}
@@ -117,16 +103,19 @@ public class TweetController {
 	
 	@RequestMapping(value = "/news-feed", method = RequestMethod.GET)
 	public String newsFeedPage(
-			Map<String, Object> map, 
-			@RequestParam(value = "offset", required = false, defaultValue = "0") int offset,
-			@RequestParam(value = "limit", required = false, defaultValue = "10") int limit
+			Map<String, Object> map
 		) {
 		
-		SecurityUser secUser = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		User user = secUser.getUserObject();
+		User user = null;
+		try {
+			SecurityUser secUser = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			user = secUser.getUserObject();
+		} catch (Exception e) { //ClassCastException String to User/SecurityUser -> invalid session
+			return "redirect:/login";
+		}
+		
 		
 		Collection<Tweet> tweetList = twiterService.getNewsFeedForUser(user);
-		System.out.println(tweetList.size());
 		map.put("tweetList", tweetList);
 		    
 		return "/news-feed";
