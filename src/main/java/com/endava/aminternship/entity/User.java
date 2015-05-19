@@ -23,6 +23,8 @@ import org.codehaus.jackson.annotate.JsonBackReference;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 
+import com.endava.aminternship.annotation.UniqueEmail;
+
 @Entity
 @Table(name = "user_table")
 public class User implements Serializable {
@@ -40,6 +42,7 @@ public class User implements Serializable {
 	private String lastname;
 
 	@Column(name = "email", unique = true)
+	@UniqueEmail(message = "Such email already exists!")
 	@Pattern(regexp = "[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})", message = " Email is not valid")
 	private String email;
 
@@ -50,8 +53,8 @@ public class User implements Serializable {
 	@JsonBackReference
 	private Collection<Tweet> tweets = new ArrayList<Tweet>();
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-	@JoinTable(name = "following_users", joinColumns = { @JoinColumn(name = "main_user", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "following_user", nullable = false, updatable = false) })
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.REMOVE })
+	@JoinTable(name = "following_users", joinColumns = { @JoinColumn(name = "main_user", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "following_user", nullable = false) })
 	private Set<User> followers = new HashSet<User>();
 
 	@ManyToMany(mappedBy = "followers", fetch = FetchType.EAGER)
@@ -130,6 +133,32 @@ public class User implements Serializable {
 
 	public void removeFollower(User follower) {
 		this.followers.remove(follower);
+	}
+	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 
 	public Set<User> getFollowing() {

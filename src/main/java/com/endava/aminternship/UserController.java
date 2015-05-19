@@ -47,13 +47,12 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/register-user", method = RequestMethod.POST)
-	public String addUser(@Valid @ModelAttribute("user") User user,
+	public String addUser(@Valid @ModelAttribute("user") User user,BindingResult result,
 			@RequestParam MultipartFile image,
-			BindingResult result, Map<String, Object> map) {
+		 Map<String, Object> map) {
 
 		if (result.hasErrors()) {
 			logger.debug("error at add user " +user);
-			System.out.println("error");
 			return "/register-user";
 		}
 		System.out.println("getting image");
