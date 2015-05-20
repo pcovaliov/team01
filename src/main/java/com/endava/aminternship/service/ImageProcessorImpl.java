@@ -24,16 +24,16 @@ public class ImageProcessorImpl implements ImageProcessorService{
 	}
 	@Override
 	public boolean isValidImage(MultipartFile f) {
-		return true;
-//		ArrayList<String> validTypes = new ArrayList<String>();
-//		validTypes.add("image/jpg"); //todo: refactor, make it cute
-//		validTypes.add("image/jpeg");
-//			
-//		if(validTypes.contains(f.getContentType())){ //todo: check size of file
-//			return true;
-//		} else {
-//			return false;
-//		}
+		ArrayList<String> validTypes = new ArrayList<String>();
+		validTypes.add("image/jpg"); //todo: refactor, make it cute
+		validTypes.add("image/jpeg");
+		validTypes.add("image/png");
+			
+		if(validTypes.contains(f.getContentType())){ //todo: check size of file
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override
