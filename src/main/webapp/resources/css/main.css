@@ -1,0 +1,16 @@
+.file-input{
+	margin-top:4px;
+	margin-bottom:3px;
+}
+
+.error{
+	color:red;
+}
+
+.file-info-label{
+	font-size:100%;
+}
+
+.register-submit-button{
+	margin-top:5px;
+}

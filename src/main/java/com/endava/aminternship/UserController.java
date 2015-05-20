@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.endava.aminternship.entity.SecurityUser;
 import com.endava.aminternship.entity.User;
@@ -27,9 +26,6 @@ import com.endava.aminternship.service.interfaces.ImageProcessorService;
 import com.endava.aminternship.service.interfaces.UserService;
 
 import org.apache.log4j.Logger;
-
-import com.cloudinary.*;
-import com.cloudinary.utils.ObjectUtils;
 
 @Controller
 public class UserController {
@@ -50,20 +46,22 @@ public class UserController {
 	public String addUser(@Valid @ModelAttribute("user") User user,BindingResult result,
 			@RequestParam MultipartFile image,
 		 Map<String, Object> map) {
-
+	
+		if (!image.isEmpty()) {
+			if(imageProcessor.isValidImage(image)){
+				if(!result.hasErrors()){
+					String uploadedFilePath = imageProcessor.uploadImage(image);
+					user.setImageUrl(uploadedFilePath);
+				}
+			} else {
+				result.rejectValue("imageUrl", null, "We can accept only jpg,jpeg and png images");
+			}
+		} 
+		
 		if (result.hasErrors()) {
 			logger.debug("error at add user " +user);
 			return "/register-user";
 		}
-		System.out.println("getting image");
-		if (!image.isEmpty()) {
-			if(imageProcessor.isValidImage(image)){
-				String uploadedFilePath = imageProcessor.uploadImage(image);
-				user.setImageUrl(uploadedFilePath);
-			} else {
-				System.out.println("not valid image");
-			}
-		} 
 		
 		logger.info("user was inserted " + user);
 		userService.addUser(user);

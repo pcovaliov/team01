@@ -2,7 +2,12 @@
 	<title>Index</title>
 	<!-- ================================== CSS ================================== -->
 	<link rel="stylesheet" type="text/css" href="/aminternship/resources/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="/aminternship/resources/css/main.css">
+	
+	<!-- ================================== jQuery =============================== -->
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	
+	<!-- ================================== myJs ================================= -->
 	<script type="text/javascript" src="/aminternship/resources/js/main.js"></script>
 	
 	<!-- ================================== Data Tables ========================== -->

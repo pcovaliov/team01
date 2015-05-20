@@ -61,13 +61,16 @@
 	      <form:label path="email">Email</form:label>
 	      <form:input path="email" cssClass="form-control" />
 	      <form:errors path="email" cssClass="error" />
-	      
-	      <span class="btn btn-default btn-file">
-			    Browse <input type="file" name="image"> </input>	
-			</span>
-
-	      <br>
-	      <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+	      <div class="file-input">
+		      <span class="btn btn-default btn-file">
+				    Browse <input type="file" name="image" onchange='$("#upload-file-info").html($(this).val().replace("C:\\fakepath\\", ""));' > </input>
+			  </span>
+			  <span class='label label-info file-info-label' id="upload-file-info"></span>
+		  </div>
+		  <form:errors path="imageUrl" cssClass="error" />
+		  <div class="register-submit-button">
+	      	<button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+	      </div>
       </form:form>
       </div>
 
