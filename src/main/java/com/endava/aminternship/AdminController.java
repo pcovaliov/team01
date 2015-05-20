@@ -25,7 +25,7 @@ public class AdminController {
 	public String deleteUser(@PathVariable("id") int id) {
 		
 		userService.removeUser(id);
-		return "redirect:/admin/view-users";
+		return "redirect:/view-users";
 	}
 	
 	@RequestMapping(value="/admin/edit-user/{id}", method = RequestMethod.GET)
@@ -47,7 +47,7 @@ public class AdminController {
 			return "/edit-user";			
 		}
 		if(userService.updateUser(user) == true){
-			return "redirect:/admin/view-users";
+			return "redirect:/view-users";
 		} else {
 			map.put("errorMessage", "User not found in the db");
 			return "/exception";
