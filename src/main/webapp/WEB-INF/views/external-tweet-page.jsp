@@ -28,7 +28,7 @@
     </script>
 
       <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-10">
           <h2>User Tweets</h2>
           <div class="table-responsive">
             <table  id="tweet-table" class="table table-striped">
@@ -52,9 +52,9 @@
         </div>
        </div>
        
-	<div class="col-lg-4">
-			<table>
-				<tr><td>Owner of the page</td></tr>
+	<div class="col-lg-2">
+			<table class="tweet-page-owner-info">
+				<tr><td><b>Owner of the page</td></b></tr>
 				<tr><td>${currentUser.firstname}</td></tr>
 				<tr><td>${currentUser.lastname}</td></tr>
 				<tr><td>
