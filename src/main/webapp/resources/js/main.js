@@ -1,6 +1,7 @@
 $(document).ready(function(){
 	$('#tweet-table').dataTable( {
-        "order": [[ 2, "desc" ]]
+        "order": [[ 2, "desc" ]],
+		"pageLength": 25
     } );
     $('#all-users').DataTable();
 });
