@@ -46,44 +46,37 @@ public class TestUserAndTweets {
 	@Test
 	public void testCreateUser() throws Exception {
 			
-
 		driver.get(baseUrl);
 		
-		driver.findElement(By.partialLinkText("Register")).click();
-		driver.findElement(By.id("firstname")).clear();
-		driver.findElement(By.id("firstname")).sendKeys("new");
-		driver.findElement(By.id("lastname")).clear();
-		driver.findElement(By.id("lastname")).sendKeys("new");
-		driver.findElement(By.id("email")).clear();
-		driver.findElement(By.id("email")).sendKeys(generatedUserEmail);
-		driver.findElement(By.xpath("//button[@type='submit']")).click();
-		driver.findElement(By.partialLinkText("Logout")).click();
-		driver.findElement(By.partialLinkText("Login")).click();
-		driver.findElement(By.name("email")).clear();
-		driver.findElement(By.name("email")).sendKeys(generatedUserEmail);
-		driver.findElement(By.xpath("//button[@type='submit']")).click();
-		driver.findElement(By.partialLinkText("Logout")).click();
-			
-		driver.findElement(By.linkText("Login")).click();
-		driver.findElement(By.name("email")).clear();
-		driver.findElement(By.name("email")).sendKeys(adminEmail);
-		driver.findElement(By.xpath("//button[@type='submit']")).click();
-		driver.findElement(By.linkText("See all users")).click();
-		driver.findElement(By.linkText("Logout")).click();
+	    driver.findElement(By.linkText("Register User")).click();
+	    driver.findElement(By.id("firstname")).clear();
+	    driver.findElement(By.id("firstname")).sendKeys("nameTest");
+	    driver.findElement(By.id("lastname")).clear();
+	    driver.findElement(By.id("lastname")).sendKeys("nameTest");
+	    driver.findElement(By.id("email")).clear();
+	    driver.findElement(By.id("email")).sendKeys(generatedUserEmail);
+	    driver.findElement(By.xpath("//button[@type='submit']")).click();
+	    driver.findElement(By.cssSelector("#see-all-users-link > a")).click();
+	    driver.findElement(By.linkText("2")).click();
+	    driver.findElement(By.linkText("82")).click();
+	    driver.findElement(By.linkText("Logout")).click();
 		
 	}
 	
 	@Test
 	  public void testCreateTweet() throws Exception {
-	    driver.get(baseUrl);
-	    driver.findElement(By.partialLinkText("Login")).click();
-	    driver.findElement(By.name("email")).clear();
-	    driver.findElement(By.name("email")).sendKeys(userEmailForTweets);
-	    driver.findElement(By.xpath("//button[@type='submit']")).click();
-	    driver.findElement(By.id("tweet")).clear();
-	    driver.findElement(By.id("tweet")).sendKeys("tweet selenium");
-	    driver.findElement(By.cssSelector("input.btn.btn-primary")).click();
-	    driver.findElement(By.partialLinkText("Logout")).click();
+		 driver.get(baseUrl);
+		    driver.findElement(By.linkText("Login")).click();
+		    driver.findElement(By.name("email")).clear();
+		    driver.findElement(By.name("email")).sendKeys(userEmailForTweets);
+		    driver.findElement(By.xpath("//button[@type='submit']")).click();
+		    driver.findElement(By.id("tweet")).clear();
+		    driver.findElement(By.id("tweet")).sendKeys("test Tweet selenium");
+		    driver.findElement(By.cssSelector("input.btn.btn-primary")).click();
+		    driver.findElement(By.cssSelector("input[type=\"search\"]")).clear();
+		    driver.findElement(By.cssSelector("input[type=\"search\"]")).sendKeys("sel");
+		    driver.findElement(By.linkText("Logout")).click();
+	   
 	  }
 	
 

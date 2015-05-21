@@ -222,13 +222,19 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-chrome-driver</artifactId>
+			<version>2.5.0</version>
+		</dependency>
+
 
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-firefox-driver</artifactId>
 			<version>2.44.0</version>
 		</dependency>
-		
+
 		<!-- upload files -->
 		<!-- Apache Commons FileUpload -->
 		<dependency>
@@ -243,7 +249,7 @@
 			<artifactId>commons-io</artifactId>
 			<version>2.4</version>
 		</dependency>
-		
+
 		<!-- Image hosting -->
 		<dependency>
 			<groupId>com.cloudinary</groupId>
