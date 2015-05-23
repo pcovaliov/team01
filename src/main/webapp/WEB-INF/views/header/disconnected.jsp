@@ -8,7 +8,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">TwitterPractice</a>
+            <a class="navbar-brand" href="#" style="cursor:default">TwitterPractice</a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -16,7 +16,7 @@
               <li id="register-user-link"><a href="/aminternship/register-user">Register User</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li id="login-link"><a href="login.html">Login</a></li>
+              <li id="login-link"><a href="/aminternship/login.html">Login</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->

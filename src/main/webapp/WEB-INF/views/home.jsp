@@ -27,9 +27,6 @@
       	
         <h1>Twitter Practice</h1>
         <p>The following project will be a simple "twitter" alike project, to improve our Java/Spring skills while at the internship</p>
-        <p>
-          <a class="btn btn-lg btn-primary" href="#" role="button">Start here</a>
-        </p>
       </div>
 
     </div>
