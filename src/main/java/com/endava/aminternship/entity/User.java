@@ -20,6 +20,7 @@ import javax.validation.constraints.Pattern;
 import javax.persistence.JoinColumn;
 
 import org.codehaus.jackson.annotate.JsonBackReference;
+import org.hibernate.annotations.Cascade;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 
@@ -49,16 +50,15 @@ public class User implements Serializable {
 	@Column(name = "role", nullable = false, columnDefinition = "varchar(15) default 'ROLE_USER'")
 	private String role = "ROLE_USER";
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.REMOVE)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade= {CascadeType.PERSIST, CascadeType.REMOVE})
 	@JsonBackReference
 	private Collection<Tweet> tweets = new ArrayList<Tweet>();
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.REMOVE })
-	@JoinTable(name = "following_users", joinColumns = { @JoinColumn(name = "main_user", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "following_user", nullable = false) })
-	private Set<User> followers = new HashSet<User>();
-
-	@ManyToMany(mappedBy = "followers", fetch = FetchType.EAGER)
-	private Set<User> following = new HashSet<User>();
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "userFollower", cascade=CascadeType.REMOVE, orphanRemoval=true)
+	private Set<FollowRelationship> followers = new HashSet<FollowRelationship>();
+	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "userFollowing", cascade=CascadeType.REMOVE, orphanRemoval=true)
+	private Set<FollowRelationship> following = new HashSet<FollowRelationship>();
 	
 	@Column(name = "image_url")
 	private String imageUrl;
@@ -119,19 +119,20 @@ public class User implements Serializable {
 		this.tweets = tweets;
 	}
 
-	public Set<User> getFollowers() {
-		return followers;
+	public Set<FollowRelationship> getFollowers() {
+		return this.followers;
 	}
 
-	public void setFollowers(Set<User> followers) {
-		this.followers = followers;
+	public void setFollowers(Set<FollowRelationship> Followers) {
+		this.followers = Followers;
 	}
+	
 
-	public void addFollower(User follower) {
+	public void addFollower(FollowRelationship follower) {
 		this.followers.add(follower);
 	}
 
-	public void removeFollower(User follower) {
+	public void removeFollower(FollowRelationship follower) {
 		this.followers.remove(follower);
 	}
 	
@@ -161,18 +162,23 @@ public class User implements Serializable {
 		return true;
 	}
 
-	public Set<User> getFollowing() {
-		return following;
+	
+	
+	public Set<FollowRelationship> getFollowing() {
+		return this.following;
 	}
 
-	public void setFollowing(Set<User> following) {
+	public void setFollowing(Set<FollowRelationship> following) {
 		this.following = following;
 	}
 
-	public void addFollowing(User following) {
+
+	public void addFollowing(FollowRelationship following) {
 		this.following.add(following);
 	}
-
+	public void removeFollowing(FollowRelationship following) {
+		this.following.remove(following);
+	}
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", firstname=" + firstname + ", lastname="

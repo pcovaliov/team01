@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.endava.aminternship.dao.interfaces.UserDAO;
+import com.endava.aminternship.entity.FollowRelationship;
 import com.endava.aminternship.entity.User;
 import com.endava.aminternship.service.interfaces.UserService;
 
@@ -44,7 +45,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public boolean isFollowing(User main, User follower){
+	public FollowRelationship isFollowing(User main, User follower){
 		return userDAO.isFollowing(main, follower);
 	}
 

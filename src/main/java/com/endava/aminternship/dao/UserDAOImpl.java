@@ -1,16 +1,20 @@
 package com.endava.aminternship.dao;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.hibernate.classic.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.endava.aminternship.UserController;
 import com.endava.aminternship.dao.interfaces.UserDAO;
 import com.endava.aminternship.entity.User;
+import com.endava.aminternship.entity.FollowRelationship;
 
 @Repository
 public class UserDAOImpl implements UserDAO {
@@ -20,12 +24,12 @@ public class UserDAOImpl implements UserDAO {
 	private SessionFactory sessionFactory;
 
 	public void addUser(User user) {
-		try{
+		try {
 			sessionFactory.getCurrentSession().save(user);
-		}  catch (Exception e) {
+		} catch (Exception e) {
 			logger.error(" exception at saving user ");
 		}
-		
+
 	}
 
 	@SuppressWarnings("unchecked")
@@ -48,16 +52,50 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	public void removeUser(Integer id) {
-		
-		User user = (User) sessionFactory.getCurrentSession().load(User.class,
+		Session session = sessionFactory.getCurrentSession();
+		User user = (User) session.load(User.class,
 				id);
+
 		if (null != user) {
+			Set<FollowRelationship> followers = user.getFollowers();
+			for(FollowRelationship follower : followers){
+				session.delete(follower);
+			}
+			System.out.println(followers);
+			
+			Set<FollowRelationship> followings = user.getFollowing();
+			for(FollowRelationship following :followings){
+				session.delete(following);
+			}
+			System.out.println(followings);
+			session.delete(user);
+							
 			logger.info(" user " + user + " was deleted ");
 			sessionFactory.getCurrentSession().delete(user);
-			
+
 		}
 
 	}
+
+	public void deleteRelationship(User user) {
+
+//		Query q = null;
+//		Set<User> userListFollowing = user.getFollowing();
+//		
+//				//int result = q.executeUpdate();
+//
+//		try {
+//			q = sessionFactory.getCurrentSession().createQuery("delete from following_users where following_user : = ");
+//			
+//		} catch (Exception e) {
+//			logger.error(" exception at getting list of user ");
+//		}    
+//		
+			
+
+		}
+
+		
 	
 
 	@Override
@@ -79,7 +117,7 @@ public class UserDAOImpl implements UserDAO {
 				return false;
 			}
 		} catch (Exception e) {
-			logger.error(" exception at updating user "+ user);
+			logger.error(" exception at updating user " + user);
 			return false;
 		}
 
@@ -97,22 +135,23 @@ public class UserDAOImpl implements UserDAO {
 			return null;
 		}
 	}
-	
+
 	@Override
-	public boolean isFollowing(User main, User follower){
-		if(main == null || follower == null)
-			return false;
+	public FollowRelationship isFollowing(User main, User follower) {
+		if (main == null || follower == null)
+			return null;
 		Query q = null;
-		q = sessionFactory.getCurrentSession().createQuery("from User u join u.followers fu where u.id=? and fu.id = ?");
-		q.setInteger(0,main.getId());
-		q.setInteger(1,  follower.getId());
-		
-		List result = q.list();
-		
-		if(result.size() == 0)
-			return false;
+		q = sessionFactory.getCurrentSession().createQuery(
+				"from FollowRelationship fr where fr.userFollowing=? and fr.userFollower = ?");
+		q.setInteger(0, main.getId());
+		q.setInteger(1, follower.getId());
+
+		List<FollowRelationship> result = q.list();
+
+		if (result.size() == 0)
+			return null;
 		else
-			return true;
+			return result.get(0);
 	}
 
 	@Override
@@ -130,4 +169,5 @@ public class UserDAOImpl implements UserDAO {
 
 		return userList;
 	}
+
 }

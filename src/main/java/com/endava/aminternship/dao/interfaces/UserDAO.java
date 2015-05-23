@@ -2,6 +2,7 @@ package com.endava.aminternship.dao.interfaces;
 
 import java.util.List;
 
+import com.endava.aminternship.entity.FollowRelationship;
 import com.endava.aminternship.entity.User;
 
 public interface UserDAO {
@@ -11,8 +12,9 @@ public interface UserDAO {
 	
 	public User findUserById(Integer id);
 	public User findUserByEmail(String email);
-	public boolean isFollowing(User main, User follower);
+	public FollowRelationship isFollowing(User main, User follower);
 	
 	public List<User> listUser(int limit, int offset);
 	public List<User> listUser();
+
 }

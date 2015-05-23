@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.endava.aminternship.entity.FollowRelationship;
 import com.endava.aminternship.entity.SecurityUser;
 import com.endava.aminternship.entity.User;
+import com.endava.aminternship.service.interfaces.FollowRelationshipService;
 import com.endava.aminternship.service.interfaces.ImageProcessorService;
 import com.endava.aminternship.service.interfaces.UserService;
 
@@ -35,7 +37,9 @@ public class UserController {
 	private UserService userService;
 	@Autowired
 	private ImageProcessorService imageProcessor;
-
+	@Autowired
+	private FollowRelationshipService frService;
+	
 	@RequestMapping(value = "/register-user", method = RequestMethod.GET)
 	public String registerUserForm(Map<String, Object> map) {
 		map.put("user", new User());
@@ -102,14 +106,17 @@ public class UserController {
 				response = "User not found";
 				return response;
 			} else {
-				if(userService.isFollowing(user,currentLoggedInUser)){
-					user.removeFollower(currentLoggedInUser);
+				FollowRelationship fr = userService.isFollowing(user,currentLoggedInUser);
+				if(fr != null){
+					frService.removeFollowRelationship(user,currentLoggedInUser);
 					response = "already following, following removed";
 				} else {
-					user.addFollower(currentLoggedInUser);
+					FollowRelationship a = new FollowRelationship();
+					a.setUserFollower(currentLoggedInUser);
+					a.setUserFollowing(user);
+					frService.addFollowRelationship(a);
 					response = "was not following, now following";
 				}
-				userService.updateUser(user);
 			}
 		}
 		

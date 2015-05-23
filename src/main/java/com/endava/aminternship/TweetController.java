@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.endava.aminternship.entity.FollowRelationship;
 import com.endava.aminternship.entity.SecurityUser;
 import com.endava.aminternship.entity.Tweet;
 import com.endava.aminternship.entity.User;
@@ -91,7 +92,8 @@ public class TweetController {
 		}
 		
 		map.put("currentLoggedInUser", currentLoggedInUser);
-		map.put("isFollowing", userService.isFollowing(user,currentLoggedInUser));
+		FollowRelationship fr = userService.isFollowing(user,currentLoggedInUser);
+		map.put("isFollowing", (fr != null ? true : false));
 		
 		Collection<Tweet> tweetList = twiterService.getAllTweetsForUser(user);
 		map.put("tweetList", tweetList);

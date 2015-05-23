@@ -2,6 +2,7 @@ package com.endava.aminternship.service.interfaces;
 
 import java.util.List;
 
+import com.endava.aminternship.entity.FollowRelationship;
 import com.endava.aminternship.entity.User;
 
 public interface UserService {
@@ -15,6 +16,7 @@ public interface UserService {
 	public User findUserById(Integer id);
 	public User findUserByEmail(String email);
 	
-	public boolean isFollowing(User main, User follower);
+	public FollowRelationship isFollowing(User main, User follower);
+	
 	
 }
