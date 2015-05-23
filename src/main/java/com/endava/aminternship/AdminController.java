@@ -1,7 +1,9 @@
 package com.endava.aminternship;
 
 import java.util.Map;
+
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -42,9 +44,19 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/admin/edit-user/{id}", method = RequestMethod.POST)
-	public String editUserAction(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Map<String, Object> map) {
+	public String editUserAction(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Map<String, Object> map,@PathVariable("id") int id) {
 		if(bindingResult.hasErrors()){
-			return "/edit-user";			
+			System.out.println(bindingResult.getFieldError("email").getDefaultMessage().equals("Such email already exists!"));
+			System.out.println(id == user.getId());
+			if(bindingResult.getFieldError("email").getDefaultMessage().equals("Such email already exists!")){
+				String insertedEmail = (String) bindingResult.getFieldValue("email");
+				User dbUser = userService.findUserByEmail(insertedEmail);
+				if(dbUser != null && dbUser.getId() != user.getId()){
+					return "/edit-user";
+				}
+			} else {
+				System.out.println("vrr");
+			}
 		}
 		if(userService.updateUser(user) == true){
 			return "redirect:/view-users";
