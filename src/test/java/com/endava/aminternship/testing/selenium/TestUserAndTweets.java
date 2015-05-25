@@ -47,20 +47,20 @@ public class TestUserAndTweets {
 	public void testCreateUser() throws Exception {
 			
 		driver.get(baseUrl);
-		
 	    driver.findElement(By.linkText("Register User")).click();
 	    driver.findElement(By.id("firstname")).clear();
-	    driver.findElement(By.id("firstname")).sendKeys("nameTest");
+	    driver.findElement(By.id("firstname")).sendKeys("test");
 	    driver.findElement(By.id("lastname")).clear();
-	    driver.findElement(By.id("lastname")).sendKeys("nameTest");
+	    driver.findElement(By.id("lastname")).sendKeys("Selenium");
 	    driver.findElement(By.id("email")).clear();
 	    driver.findElement(By.id("email")).sendKeys(generatedUserEmail);
 	    driver.findElement(By.xpath("//button[@type='submit']")).click();
 	    driver.findElement(By.cssSelector("#see-all-users-link > a")).click();
-	  //  driver.findElement(By.linkText("91")).click();
+	    new Select(driver.findElement(By.name("all-users_length"))).selectByVisibleText("100");
+	    driver.findElement(By.cssSelector("input[type=\"search\"]")).clear();
+	    driver.findElement(By.cssSelector("input[type=\"search\"]")).sendKeys(generatedUserEmail);
 	    driver.findElement(By.linkText(generatedUserEmail)).click();
 	    driver.findElement(By.linkText("Logout")).click();
-		
 	}
 	
 	@Test
