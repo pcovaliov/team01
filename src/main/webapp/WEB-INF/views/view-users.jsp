@@ -39,10 +39,10 @@
               
               <c:forEach items="${usersList}" var="user">
 						<tr>
-							<td><a href="/aminternship/tweet-page/${user.getId()}">${user.getId()}</a></td>
+							<td>${user.getId()}</td>
 							<td>${user.getFirstname()}</td>
 							<td>${user.getLastname()}</td>
-							<td>${user.getEmail()}</td>
+							<td><a href="/aminternship/tweet-page/${user.getId()}">${user.getEmail()}</a></td>
 							<td>
 								<c:set var="avatarUrl" value="${user.imageUrl}" />
 								<img src="

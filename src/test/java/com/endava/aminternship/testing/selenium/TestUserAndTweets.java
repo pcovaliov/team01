@@ -57,8 +57,8 @@ public class TestUserAndTweets {
 	    driver.findElement(By.id("email")).sendKeys(generatedUserEmail);
 	    driver.findElement(By.xpath("//button[@type='submit']")).click();
 	    driver.findElement(By.cssSelector("#see-all-users-link > a")).click();
-	    driver.findElement(By.linkText("2")).click();
-	    driver.findElement(By.linkText("82")).click();
+	  //  driver.findElement(By.linkText("91")).click();
+	    driver.findElement(By.linkText(generatedUserEmail)).click();
 	    driver.findElement(By.linkText("Logout")).click();
 		
 	}
